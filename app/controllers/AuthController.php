@@ -98,9 +98,10 @@ class AuthController extends Controller
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['role_id'] = $user['role_id'];
         $_SESSION['fullname'] = $user['fullname'];
+        $_SESSION['profile_complete'] = $user['profile_complete'];
 
-        if (!empty($user['profile_complete']) && $user['profile_complete'] == 1) {
-            header('Location: user/dashboard');
+        if ($_SESSION['profile_complete'] == 1) {
+            header('Location: user/matches');
             exit();
         } else {
             header('Location: user/profilecreate');

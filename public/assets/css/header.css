@@ -1,0 +1,144 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+   main {
+    margin-left: 275px;     
+    padding: 21px;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9; 
+  color: #333;
+}
+
+.header {
+  background-color: #fff;  
+  color: #b92d2d;         
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo h1 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  user-select: none;
+  color: #b92d2d;
+}
+
+.logo h1 span {
+  color: #ef4b4b; 
+}
+.nav {
+  position: relative;
+  display: flex;
+}
+.nav h2 {
+ font-size: 18px;
+    color: #2c3e50;
+  margin-right: 1rem;
+  font-weight: bold;
+}
+
+.menu-icon {
+  font-size: 1.4rem;
+  cursor: pointer;
+  margin-left: 10px;
+  user-select: none;
+  color: #b92d2d;
+}
+
+ header .nav{
+    display: flex;
+     align-items:center;
+     position: relative;
+}
+header .nav i{
+        width: 35px;
+    height: 35px;
+    background: rgb(231, 231, 231);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    color: black;
+}
+.profile{
+    position: absolute;
+    display: none;
+    width: 200px;
+    top: 45px;
+    z-index: 2;
+    right: 0px;
+     background: #fff;
+     color: black;
+     border-radius: 10px;
+     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.profile nav ul{
+    margin: 10px;
+}
+.profile nav ul li {
+    list-style: none;
+    margin-top: 13px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.profile ul li:hover{
+    background: rgb(243, 243, 243);
+}
+.profile nav ul li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+} 
+
+.sidebar {
+  width: 270px;
+  background-color: #fff;  
+  padding: 2rem 1rem;
+  color: #333; 
+  border-right: 1px solid #f0f0f0;
+  overflow-y: auto;
+  position:fixed;
+  border-radius: 10px;
+  margin: 20px;
+   display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  margin-bottom: 1.2rem;
+}
+
+.sidebar ul li a {
+  color: black;      
+  font-weight: 400;
+  text-decoration: none;
+  font-size: 17px;
+  padding: 10px 20px;
+  display: block;
+  border-radius: 4px;
+  transition: color 0.3s ease;
+}
+.sidebar ul li a:hover { 
+    background: rgb(243, 243, 243);
+}

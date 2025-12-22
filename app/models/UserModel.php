@@ -17,6 +17,7 @@ class UserModel extends Model {
     return $stmt->execute();
     }
 
+    //function to check email aready exist or not 
     public function emailExists($email){
          $stmt = $this->conn->prepare( "SELECT * FROM users WHERE email = ? LIMIT 1" );
         $stmt->bind_param('s', $email);
