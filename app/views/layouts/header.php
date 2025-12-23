@@ -31,7 +31,7 @@
 
     <div class="sidebar">
       <ul>
-        <li><a href="/user/dashboard">My Matches</a></li>
+        <li><a href="/user/matches">My Matches</a></li>
         <?php if ($_SESSION['profile_complete']!=1): ?>
           <li><a href="/user/profilecreate">Complete Profile</a></li>
         <?php endif; ?>

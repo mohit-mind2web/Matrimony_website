@@ -30,4 +30,12 @@ class Profile extends Model{
     $stmt->bind_param("i", $userid);
     $stmt->execute();
 }
+public function getprofilebyid($user_id){
+         $sql="SELECT p.*,u.fullname FROM profiles p JOIN users u ON p.user_id=u.id
+         WHERE user_id=?";
+         $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
 }

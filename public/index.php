@@ -4,6 +4,7 @@
 use App\controllers\AuthController;
 use App\controllers\MatchesController;
 use App\controllers\ProfilecreateController;
+use App\controllers\ProfileviewController;
 use App\core\Router;
  session_start();
  $router=new Router();
@@ -16,5 +17,7 @@ use App\core\Router;
   $router->get('/user/matches',[MatchesController::class,'index']);
   $router->get('/user/profilecreate',[ProfilecreateController::class,'index']);
   $router->post('/user/profilecreate',[ProfilecreateController::class,'profile']);
+
+  $router->get('/user/profileview',[ProfileviewController::class,'profileview']);
 
   $router->dispatch();
