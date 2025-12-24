@@ -1,0 +1,83 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+.head h2{
+        color: rgb(52 73 94);
+}
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+.photo{
+    display: flex;
+    gap: 10px;
+}
+.name{
+    margin-top: 10px;
+
+}
+.name h4{
+    color: rgb(52 73 94);
+    font-weight: bold;
+    font-size: 18px;
+}
+.name p{
+    color: rgb(118 132 147);
+    margin-top: 5px;
+    font-size: 16px;
+}
+.card img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #007bff;
+    margin-bottom: 10px;
+}
+.container{
+    margin-top: 30px;
+}
+.action{
+    display: flex;
+    gap: 20px;
+}
+.action .accept{
+    padding: 8px 16px;
+    background: green;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+}
+.action .reject{
+    padding: 8px 16px;
+    background: #ef4b4b;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+}
+.head2{
+    margin-top: 20px;
+       color: rgb(52 73 94);
+    
+
+}
+.requestsent{
+    background-color: #ccc;
+    color: black;
+    cursor: not-allowed;
+    opacity: 0.6;
+    padding: 8px 16px;
+    border-radius: 10px;
+}

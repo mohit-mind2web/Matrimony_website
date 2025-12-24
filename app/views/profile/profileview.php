@@ -54,7 +54,7 @@ include '../app/views/layouts/header.php';
             </ul>
         </section><br>
 <div class="back">
-        <a href="/user/matches"> < Back</a></div>
+        <a href="/user/matches">Back</a></div>
     </section>
 
 </main>

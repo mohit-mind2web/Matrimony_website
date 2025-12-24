@@ -35,8 +35,8 @@
         <?php if ($_SESSION['profile_complete']!=1): ?>
           <li><a href="/user/profilecreate">Complete Profile</a></li>
         <?php endif; ?>
-        <li><a href="/profile/view">Search / Filter</a></li>
-        <li><a href="/profile/requests">Interest Received</a></li>
+        <li><a href="/user/filters">Search / Filter</a></li>
+        <li><a href="/user/interests">Interests Received</a></li>
         <li><a href="/favorites">Shortlist Profiles</a></li>
         <li><a href="/logout">Logout</a></li>
       </ul>

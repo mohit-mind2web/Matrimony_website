@@ -124,7 +124,7 @@ body {
 }
 .back a{
     display: inline-block;
-    background-color: grey;
+    background-color: #ececec;
     color: black;
     padding: 8px 16px;
     border-radius: 10px;
