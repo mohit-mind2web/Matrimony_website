@@ -28,7 +28,8 @@
             <label>Email</label><br>
             <input type="text" name="email" placeholder=" Enter your Email" required><br><br>
             <label>Password</label><br>
-            <input type="text" name="password" placeholder=" Enter password" pattern=".{6,255}" title="Minimum 6 characters"><br><br>
+            <input type="text" name="password" placeholder=" Enter password" pattern=".{6,255}" title="Minimum 6 characters"><br>
+            <p>Already have an account?<a href="/login">Login here</a></p>
             <button type="submit">Register</button>
         </form>
 

@@ -11,7 +11,7 @@ class AuthController extends Controller
     //function to render register from
     public function registerform()
     {
-        $this->view('auth/register');
+        $this->render('auth/register');
     }
     public function register()
     {
@@ -73,7 +73,9 @@ class AuthController extends Controller
     //functioon to render login form
     public function loginForm()
     {
-        $this->view('auth/login');
+        Auth::redirectIfLoggedIn();
+        $this->render('auth/login');
+
     }
     public function login()
     {

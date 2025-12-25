@@ -13,7 +13,7 @@
       <h1>Soul<span>Mates</span></h1>
     </div>
     <div class="nav">
-      <h2>Welcome <?= $_SESSION['fullname'] ?? 'Guest' ?> !</h2>
+      <h2>Welcome <?= $_SESSION['fullname']?> !</h2>
       <i onclick="menu(event)" class="fas fa-bars menu-icon"></i>
       <div class="profile">
         <nav>
@@ -37,7 +37,7 @@
         <?php endif; ?>
         <li><a href="/user/filters">Search / Filter</a></li>
         <li><a href="/user/interests">Interests Received</a></li>
-        <li><a href="/favorites">Shortlist Profiles</a></li>
+        <li><a href="/user/shortlists">Shortlist Profiles</a></li>
         <li><a href="/logout">Logout</a></li>
       </ul>
         </div>

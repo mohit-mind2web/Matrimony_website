@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+.header {
+     background-color: #fff;  
+  color: #b92d2d;         
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 20px;
+}
+
+.logo h1 {
+    font-weight: 700;
+  font-size: 1.8rem;
+  user-select: none;
+  color: #b92d2d;
+}
+
+.logo span {
+    color: #f44336;
+}
+
+.auth-buttons .btn {
+    text-decoration: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.login-btn {
+    background: transparent;
+    color: black;
+    border: 1px solid #ddd;
+}
+
+.register-btn {
+    background: #f44336;
+    color: #fff;
+}
+
+.hero {
+    height: 100vh;
+    background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.8)),url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ58z-rtxVfgq1Bg3wFkphQzzcYZ49l49Gtw&s') ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    padding: 0 20px;
+}
+
+.hero-content {
+    max-width: 700px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    border-radius: 8px;
+}
+
+.hero-content h2 {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.hero-content p {
+    font-size: 21px;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.hero-btn {
+    background: #f44336;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}

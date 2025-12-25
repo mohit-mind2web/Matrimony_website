@@ -138,3 +138,15 @@
      background-color: #ccc;
     color: #666;
 }
+.contact {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+    border: 1px solid #ddd;
+    background-color:#f3f2f2;
+    color: #484343;
+    text-decoration: none;
+}

@@ -17,6 +17,24 @@ class InterestsController extends Controller
             'sentinterest' => $sentinterest,
             'receivedinterest' => $receivedinterest
         ]); 
-        
+    }
+
+    public function accept(){
+         Auth::checkLogin();
+         $requestid=$_GET['reqid'];
+         $interestModel=new ConnectRequest();
+         $interestModel->updateStatus($requestid,1);
+         header("Location:/user/interests");
+         exit();
+
+    }
+    public function reject(){
+         Auth::checkLogin();
+         $requestid=$_GET['reqid'];
+         $interestModel=new ConnectRequest();
+         $interestModel->updateStatus($requestid,2);
+         header("Location:/user/interests");
+         exit();
+
     }
 }

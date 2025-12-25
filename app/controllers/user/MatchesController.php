@@ -17,7 +17,7 @@ class MatchesController extends Controller
         $user_id = $_SESSION['user_id'];
         $profile_complete = $_SESSION['profile_complete'] ?? 0;
         $profileModel = new Profile();
-        $myprofile = $profileModel->getprofilebyid($user_id);
+        $myprofile = $profileModel->getprofilebyid($user_id,$user_id);
         if ($myprofile) {
             $mygender = $myprofile['gender'];
             $gender = ($mygender == 1) ? 2 : 1;

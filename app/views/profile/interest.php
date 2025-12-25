@@ -1,6 +1,4 @@
-<?php
-include '../app/views/layouts/header.php';
-?>
+
 
 <head>
     <meta charset="UTF-8">
@@ -25,10 +23,11 @@ include '../app/views/layouts/header.php';
                     </div>
                     <div class="action">
                         <?php if ($receive['status'] == 0): ?>
-                            <a href="" class="accept">Accept</a>
-                            <a href="" class="reject">Decline</a>
+                            <a href="/interest/accept?reqid=<?= $receive['id'] ?>" class="accept">Accept</a>
+                            <a href="interest/reject?reqid=<?= $receive['id'] ?>" class="reject">Decline</a>
                         <?php elseif ($receive['status'] == 1): ?>
-                            <span class="accept">Connected</span>
+                            <span class="accept">Accepted</span>
+                          <a href="/user/profileview?id=<?= $receive['user_id']  ?>" class="contact">Contact Now</a>
                         <?php elseif ($receive['status'] == 2): ?>
                             <span class="reject">Declined</span>
 
@@ -58,7 +57,8 @@ include '../app/views/layouts/header.php';
                         <?php if ($sent['status'] == 0): ?>
                             <span class="requestsent">Interest Sent</span>
                         <?php elseif ($sent['status'] == 1): ?>
-                            <span class="accept">Connected</span>
+                                <span class="accept">Accepted</span>
+                            <a href="/user/profileview?id=<?= $sent['user_id']  ?>" class="contact">Contact Now</a>
                         <?php elseif ($sent['status'] == 2): ?>
                             <span class="reject">Declined</span>
 
@@ -70,5 +70,6 @@ include '../app/views/layouts/header.php';
             <p>No Sent Interests</p>
         <?php } ?>
         </div>
+          <?php include __DIR__ . '/../layouts/pagination.php'; ?>
     </section>
 </main>

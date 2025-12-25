@@ -8,6 +8,7 @@ class ProfileviewController extends Controller{
          Auth::checkLogin();
           
     $user_id = $_GET['id'] ?? null; 
+    $viewer_id=$_SESSION['user_id'];
            $constants = require APPROOT . '/config/constants.php';
 $genders=$constants['genders'] ?? [];
 $heights = $constants['heights'] ?? [];
@@ -16,7 +17,7 @@ $professions=$constants['professions'] ??[];
 $educations=$constants['educations']??[];
 
      $profileModel = new Profile();
-        $profileview = $profileModel->getprofilebyid($user_id);
+        $profileview = $profileModel->getprofilebyid($user_id,$viewer_id);
         if (!$profileview) {
             die('Profile not found');
         }

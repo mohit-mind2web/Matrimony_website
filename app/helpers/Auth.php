@@ -23,7 +23,7 @@ class Auth
     {
         self::checkLogin();
 
-        if (!in_array($_SESSION['role'], $roles)) {
+        if (!in_array($_SESSION['role_id'], $roles)) {
             header("HTTP/1.0 403 Forbidden");
             include __DIR__ . '/../views/layout/access.php';
             exit();
@@ -32,13 +32,13 @@ class Auth
     public static function redirectIfLoggedIn(): void
     {
          self::initSession();
-        if (isset($_SESSION['role'])) {
-            $role = $_SESSION['role'];
+        if (isset($_SESSION['role_id'])) {
+            $role = $_SESSION['role_id'];
             if ($role == 'admin' || $role == 1) {
-                header("Location: /admin_dashboard");
+                header("Location: /admin/dashboard");
             } 
             else{
-                   header("Location: /employee/dashboard");
+                   header("Location: /user/matches");
             }
             exit();
         }
@@ -47,7 +47,7 @@ class Auth
     {
        self::initSession();
         session_destroy();
-        header("Location: /login");
+        header("Location: /");
         exit();
     }
 }

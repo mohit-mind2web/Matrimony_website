@@ -65,6 +65,7 @@ body {
     cursor: pointer;
     font-size: 14px;
     transition: 0.3s;
+    border: 1px solid #ddd;
 }
 
 .connect-btn {
@@ -114,7 +115,7 @@ body {
 }
 
 .profile-section.details li strong {
-    width: 120px;
+    width: 313px;
     display: inline-block;
     color: #555;
 }
@@ -130,4 +131,16 @@ body {
     border-radius: 10px;
     text-decoration: none;
     text-align: end;
+}
+.shortlist-icon{
+    padding: 8px 16px;
+    background: #ef4b4b;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.btnd{
+   padding: 8px 16px;
+    cursor:not-allowed; 
 }

@@ -1,11 +1,9 @@
-<?php
-include '../app/views/layouts/header.php';
-?>
-
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/css/profileview.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/assets/js/connect.js"></script> 
     <title>Profile View</title>
 </head>
 
@@ -31,8 +29,24 @@ include '../app/views/layouts/header.php';
 
         <section class="profile-actions">
             <?php if ($_SESSION['profile_complete'] == 1): ?>
-                <a href="/connect/send/<?= $profileview['user_id'] ?>" class="btn connect-btn">Connect</a>
-                <button class="btn shortlist-btn"><i class="fa-solid fa-star"></i> Shortlist</button>
+                <?php if ($profileview['status'] === null): ?>
+                    <button class="connect-btn btn" data-receiver-id="<?= $profileview['user_id'] ?>">Connect</button>
+                <?php elseif ($profileview['status'] === 0): ?>
+                    <button class="btnd disabled" disabled>Request Sent</button>
+                <?php elseif ($profileview['status'] === 1): ?>
+                    <button class="btn">Connected</button>
+                <?php elseif ($profileview['status'] === 2): ?>
+                    <button class="btnd disabled" disabled>Request Rejected</button>
+                <?php endif; ?>
+                <button type="button" class="shortlist-icon" data-profile-id="<?= $profileview['user_id'] ?>">
+                    <i class="<?= $profileview['is_shortlist'] ? 'fa-solid' : 'fa-regular' ?> fa-star"></i>
+                    <span class="shortlist-text">
+                        <?= $profileview['is_shortlist'] ? 'Shortlisted' : 'Shortlist' ?>
+                    </span>
+                </button>
+
+
+
             <?php else: ?>
                 <button class="btn connect-btn" onclick="alert('Complete your profile to connect')">Connect</button>
             <?php endif; ?>
@@ -42,6 +56,16 @@ include '../app/views/layouts/header.php';
             <h2>About Me</h2>
             <p><?= nl2br(htmlspecialchars($profileview['about_me'])) ?></p>
         </section>
+        <?php if ($profileview['status'] === 1) { ?>
+            <section class="profile-section details">
+                <h2>Contact Details</h2>
+                <ul>
+                    <li><strong>Mobile Number:</strong> <?= htmlspecialchars($profileview['mobileno']) ?? 'N/A' ?> (Contact here)</li>
+                    <li><strong>Email:</strong> <?= htmlspecialchars($profileview['email']) ?? 'N/A' ?></li>
+                    <li><strong>City:</strong> <?= htmlspecialchars($profileview['city']) ?></li>
+                </ul>
+            </section><br>
+        <?php } ?>
 
         <section class="profile-section details">
             <h2>Basic Details</h2>
@@ -53,8 +77,9 @@ include '../app/views/layouts/header.php';
                 <li><strong>City:</strong> <?= htmlspecialchars($profileview['city']) ?></li>
             </ul>
         </section><br>
-<div class="back">
-        <a href="/user/matches">Back</a></div>
+        <div class="back">
+            <a href="/user/matches">Back</a>
+        </div>
     </section>
 
 </main>

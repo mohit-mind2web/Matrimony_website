@@ -1,6 +1,4 @@
 <?php
-include '../app/views/layouts/header.php';
-
 $heights = $constants['heights'] ?? [];
 $religions = $constants['religions'] ?? [];
 ?>
@@ -10,7 +8,7 @@ $religions = $constants['religions'] ?? [];
     <link rel="stylesheet" href="/assets/css/matches.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/assets/js/script.js"></script> 
+    <script src="/assets/js/connect.js"></script> 
     <title>Document</title>
 </head>
 
@@ -42,8 +40,8 @@ $religions = $constants['religions'] ?? [];
             <?php if (!empty($profiles)) { ?>
                 <?php foreach ($profiles as $profile) { ?>
                     <div class="card">
-                        <div class="shortlist-icon">
-                            <i class="fa-regular fa-star"></i>
+                        <div class="shortlist-icon" data-profile-id="<?= $profile['user_id'] ?>">
+                           <i class="<?= !empty($profile['is_shortlist']) ? 'fa-solid' : 'fa-regular' ?> fa-star"></i>
                         </div>
 
                         <img src="/uploads/<?= $profile['profile_photo'] ?? 'default.png' ?>" width="120">
@@ -67,7 +65,7 @@ $religions = $constants['religions'] ?? [];
                             <?php elseif ($status === 0): ?>
                                 <button class="btnd disabled" disabled>Request Sent</button>
                             <?php elseif ($status === 1): ?>
-                                <button class="btn">Contact Now</button>
+                                <button class="contact">Contact Now</button>
                             <?php elseif ($status === 2): ?>
                                 <button class="btnd disabled" disabled>Request Rejected</button>
                             <?php endif; ?>
@@ -82,14 +80,7 @@ $religions = $constants['religions'] ?? [];
             <?php } ?>
 
         </div>
+       <?php include __DIR__ . '/../layouts/pagination.php'; ?>
     </section>
+    
 </main>
-<script>
-    document.querySelectorAll('.shortlist-icon').forEach(icon => {
-        icon.addEventListener('click', () => {
-            const i = icon.querySelector('i');
-            i.classList.toggle('fa-regular');
-            i.classList.toggle('fa-solid');
-        });
-    });
-</script>

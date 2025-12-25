@@ -36,6 +36,7 @@ class ProfilecreateController extends Controller
     //function to save profile details to dsahboard
     public function profile()
     {
+             Auth::checkLogin();
         $constants = require APPROOT . '/config/constants.php';
 
         $allowedReligions   = array_keys($constants['religions']);
