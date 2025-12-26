@@ -2,8 +2,8 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/css/profileview.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/assets/js/connect.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/assets/js/connect.js"></script>
     <title>Profile View</title>
 </head>
 
@@ -16,6 +16,8 @@
 
             <div class="profile-basic">
                 <h1><?= htmlspecialchars($profileview['fullname']) ?></h1>
+                <h3>ID - <?= $profileview['id'] ?></h3>
+                
 
                 <p class="meta">
                     <?= date_diff(date_create($profileview['dob']), date_create())->y ?> yrs |
@@ -31,8 +33,10 @@
             <?php if ($_SESSION['profile_complete'] == 1): ?>
                 <?php if ($profileview['status'] === null): ?>
                     <button class="connect-btn btn" data-receiver-id="<?= $profileview['user_id'] ?>">Connect</button>
-                <?php elseif ($profileview['status'] === 0): ?>
+                <?php elseif ($profileview['status'] === 0 && $profileview['sender_id'] == $_SESSION['user_id']): ?>
                     <button class="btnd disabled" disabled>Request Sent</button>
+                <?php elseif ($profileview['status'] === 0 && $profileview['receiver_id'] == $_SESSION['user_id']): ?>
+                    <button class="btnd disabled" disabled>Request Received</button>
                 <?php elseif ($profileview['status'] === 1): ?>
                     <button class="btn">Connected</button>
                 <?php elseif ($profileview['status'] === 2): ?>

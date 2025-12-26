@@ -38,7 +38,7 @@ class Profile extends Model
     }
     public function getprofilebyid($user_id,$viewer_id)
     {
-        $sql = "SELECT p.*,i.status,u.fullname,u.email,(s.id IS NOT NULL) AS is_shortlist FROM profiles p 
+        $sql = "SELECT p.*,i.status,u.fullname,u.email,i.sender_id,i.receiver_id,(s.id IS NOT NULL) AS is_shortlist FROM profiles p 
          JOIN users u ON p.user_id=u.id
         LEFT JOIN interests i 
         ON ((i.sender_id = ? AND i.receiver_id=p.user_id) OR (i.sender_id=p.user_id AND i.receiver_id = ?))

@@ -8,6 +8,7 @@ use App\controllers\user\InterestsController;
 use App\controllers\user\MatchesController;
 use App\controllers\user\ProfilecreateController;
 use App\controllers\user\ProfileviewController;
+use App\controllers\user\SearchController;
 use App\controllers\user\ShortlistController;
 use App\core\Router;
 
@@ -29,4 +30,6 @@ $router->get('/interest/accept', [InterestsController::class, 'accept']);
 $router->get('/interest/reject', [InterestsController::class, 'reject']);
 $router->get('/user/shortlists',[ShortlistController::class,'index']);
 $router->post('/shortlist/toggle',[ShortlistController::class,'toggle']);
+$router->post('/user/matches/filter',[MatchesController::class,'filter']);
+
 $router->dispatch();

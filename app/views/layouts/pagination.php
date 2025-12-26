@@ -1,28 +1,42 @@
+<?php 
+$currentTab = $pagination['tab'] ?? null; 
+?>
 <head>
     <link rel="stylesheet" href="/assets/css/pagination.css" />
 </head>
-
 <main>
-<div class="pagination">
-    <nav>
-        <ul>
-            <?php
-            $params = $_GET;
-            if ($page > 1) {
-                $params['page'] = $page - 1;
-                echo '<li><a href="?' . http_build_query($params) . '">Previous</a></li>';
-            }
-            for ($i = 1; $i <= $totalpages; $i++) {
-                $params['page'] = $i;
-                $active = ($i == $page) ? 'active' : '';
-                echo '<li class="' . $active . '"><a href="?' . http_build_query($params) . '" class="' . $active . '">' . $i . '</a></li>';
-            }
-            if ($page < $totalpages) {
-                $params['page'] = $page + 1;
-                echo '<li><a href="?' . http_build_query($params) . '">Next</a></li>';
-            }
-            ?>
-        </ul>
+    <?php if ($pagination['totalpages'] > 1): ?>
+        <div class="pagination">
+            <nav>
+                <ul>
+                    <?php if ($pagination['page'] > 1): ?>
+                        <li>
+                            <a href="?<?= $currentTab ? "tab={$currentTab}&" : "" ?><?= $pagination['pageParam'] ?>=<?= $pagination['page'] - 1 ?>">
+                                Prev
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php for ($i = 1; $i <= $pagination['totalpages']; $i++): ?>
+                        <li>
+                            <a href="?<?= $currentTab ? "tab={$currentTab}&" : "" ?><?= $pagination['pageParam'] ?>=<?= $i ?>"
+                                class="<?= $i == $pagination['page'] ? 'active' : '' ?>">
+                                <?= $i ?>
+                            </a>
+                        </li>
+                    <?php endfor; ?>
+                    <?php if ($pagination['page'] < $pagination['totalpages']): ?>
+                        <li>
+                            <a href="?<?= $currentTab ? "tab={$currentTab}&" : "" ?><?= $pagination['pageParam'] ?>=<?= $pagination['page'] + 1 ?>">
+                                Next
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                </ul>
+            </nav>
+        </div>
+    <?php endif; ?>
+    </ul>
     </nav>
-</div>
 </main>

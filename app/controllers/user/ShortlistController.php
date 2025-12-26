@@ -2,6 +2,7 @@
 namespace App\controllers\user;
 use App\helpers\Auth;
 use App\core\Controller;
+use App\helpers\Pagination;
 use App\models\ShortlistModel;
 
 class ShortlistController extends Controller{
@@ -9,11 +10,14 @@ class ShortlistController extends Controller{
         Auth::checkLogin();
         $profilecomplete=$_SESSION['profile_complete'];
         $user_id=$_SESSION['user_id'];
-        $shorlistModel=new ShortlistModel();
-        $shortlistprofiles=$shorlistModel->getallshortlists($user_id);
+        $shortlistModel=new ShortlistModel();
+        $total=$shortlistModel->countshortlists($user_id);
+        $pagination=Pagination::pagination($total,3);
+        $shortlistprofiles=$shortlistModel->getallshortlists($user_id,$pagination['limit'],$pagination['offset']);
         $this->view('profile/shortlist',[
             'shortlistprofiles'=>$shortlistprofiles,
-            'profilecomplete'=>$profilecomplete
+            'profilecomplete'=>$profilecomplete,
+            'pagination'=>$pagination
         ]);
     }
 

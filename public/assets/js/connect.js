@@ -11,7 +11,7 @@ $(document).ready(function() {
                 var result = JSON.parse(response);
                 if (result.success) {
                     if(result.status === 0){
-                        button.text('Request Sent');
+                        button.text('Interest Sent');
                         button.prop('disabled', true);
                         button.addClass('btnd');
                     } else if(result.status === 1){
@@ -56,4 +56,55 @@ $(document).ready(function() {
             }
         });
     });
+
+
+
+    // Submit filters using ajax
+    $('#filterForm').on('submit', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: '/user/matches/filter',
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function (response) {
+                $('#profilesContainer').html(response);
+            }
+        });
+    });
+
+    $(document).on('click', '.page-link', function(e){
+    e.preventDefault();
+    let page = $(this).data('page');
+
+    let data = $('#filterForm').serializeArray();
+    data.push({name:'page', value: page}); 
+
+    $.ajax({
+        url: '/user/matches/filter',
+        type: 'POST',
+        data: $.param(data),
+        success: function(res){
+            $('#profilesContainer').html(res);
+        }
+    });
+});
+
+
+    // Reset filters
+    $('#resetFilters').on('click', function () {
+        $('#filterForm')[0].reset();
+
+        $.ajax({
+            url: '/user/matches/filter',
+            type: 'POST',
+            data: {},
+            success: function (response) {
+                $('#profilesContainer').html(response);
+            }
+        });
+    });
+
+
+
 });

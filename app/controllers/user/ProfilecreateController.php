@@ -26,7 +26,7 @@ class ProfilecreateController extends Controller
     //function to view profile craete form
     public function index()
     {
-        $this->view(
+        $this->render(
             'profile/profilecreation',
             $this->getdata()
         );

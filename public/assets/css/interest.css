@@ -3,8 +3,26 @@
     padding: 0px;
     box-sizing: border-box;
 }
-.head h2{
-        color: rgb(52 73 94);
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-btn.active {
+   background: #ef4b4b;
+    color: #fff;
+    border: none;
+}
+.tabs button{
+        padding: 10px 20px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+        color: rgb(118 132 147);
+    background: #f5f5f5;
 }
 .card {
     background-color: #fff;
@@ -74,8 +92,6 @@
 .head2{
     margin-top: 20px;
        color: rgb(52 73 94);
-    
-
 }
 .requestsent{
     background-color: #ccc;
@@ -107,4 +123,14 @@
 .btnd{
     padding: 8px 16px;
     cursor:not-allowed;
+}
+.connect-btn{
+    padding: 8px 16px;
+    background: #ef4b4b;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+
 }

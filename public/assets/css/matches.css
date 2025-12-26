@@ -150,3 +150,36 @@
     color: #484343;
     text-decoration: none;
 }
+.form{
+    margin-top: 20px;
+}
+form{
+    display: flex;
+    gap: 10px;
+}
+form input,select{
+        padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+}
+.search{
+    padding: 5px 10px;
+    background-color: #ef4b4b;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    border: none;
+     font-size: 15px;
+}
+#resetFilters{
+    padding: 5px 10px;
+    background-color: #b93838;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    border: none;
+     font-size: 15px;
+}
+

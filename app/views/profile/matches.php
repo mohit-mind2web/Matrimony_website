@@ -8,7 +8,7 @@ $religions = $constants['religions'] ?? [];
     <link rel="stylesheet" href="/assets/css/matches.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/assets/js/connect.js"></script> 
+    <script src="/assets/js/connect.js"></script>
     <title>Document</title>
 </head>
 
@@ -20,6 +20,59 @@ $religions = $constants['religions'] ?? [];
             <?php } else { ?>
                 <h2>Matches for You</h2>
             <?php } ?>
+        </div>
+        <div class="form">
+            <form id="filterForm" class="filter-form">
+
+                <input type="text" name="city" placeholder="City">
+
+                <select name="age_from">
+                    <option value="">Age From</option>
+                    <?php for ($i = 18; $i <= 60; $i++): ?>
+                        <option value="<?= $i ?>"><?= $i ?></option>
+                    <?php endfor; ?>
+                </select>
+
+                <select name="age_to">
+                    <option value="">Age To</option>
+                    <?php for ($i = 18; $i <= 60; $i++): ?>
+                        <option value="<?= $i ?>"><?= $i ?></option>
+                    <?php endfor; ?>
+                </select>
+
+                <select name="height_id">
+                    <option value="">Height</option>
+                    <?php foreach ($constants['heights'] as $id => $label): ?>
+                        <option value="<?= $id ?>"><?= $label ?></option>
+                    <?php endforeach; ?>
+                </select>
+
+                <select name="religion_id">
+                    <option value="">Religion</option>
+                    <?php foreach ($constants['religions'] as $id => $name): ?>
+                        <option value="<?= $id ?>"><?= $name ?></option>
+                    <?php endforeach; ?>
+                </select>
+
+                <select name="education_id">
+                    <option value="">Education</option>
+                    <?php foreach ($constants['educations'] as $id => $name): ?>
+                        <option value="<?= $id ?>"><?= $name ?></option>
+                    <?php endforeach; ?>
+                </select>
+
+                <select name="profession_id">
+                    <option value="">Profession</option>
+                    <?php foreach ($constants['professions'] as $id => $name): ?>
+                        <option value="<?= $id ?>"><?= $name ?></option>
+                    <?php endforeach; ?>
+                </select>
+
+                <button type="submit" class="search">Search</button>
+                <button type="button" id="resetFilters">Reset</button>
+
+            </form>
+
         </div>
         <?php if ($_SESSION['profile_complete'] != 1) { ?>
             <div class="incomplete">
@@ -36,12 +89,12 @@ $religions = $constants['religions'] ?? [];
             </div>
         <?php } ?>
 
-        <div class="profiles">
+        <div class="profiles" id="profilesContainer">
             <?php if (!empty($profiles)) { ?>
                 <?php foreach ($profiles as $profile) { ?>
                     <div class="card">
                         <div class="shortlist-icon" data-profile-id="<?= $profile['user_id'] ?>">
-                           <i class="<?= !empty($profile['is_shortlist']) ? 'fa-solid' : 'fa-regular' ?> fa-star"></i>
+                            <i class="<?= !empty($profile['is_shortlist']) ? 'fa-solid' : 'fa-regular' ?> fa-star"></i>
                         </div>
 
                         <img src="/uploads/<?= $profile['profile_photo'] ?? 'default.png' ?>" width="120">
@@ -57,16 +110,16 @@ $religions = $constants['religions'] ?? [];
 
                         <?php if ($profile_complete): ?>
                             <a href="/user/profileview?id=<?= $profile['user_id'] ?>">View Profile</a>
-                             <?php
-                            $status = $profile['requeststatus'] ?? null;
-                            ?>
-                            <?php if ($status === null): ?>
+
+                            <?php if ($profile['status'] === null): ?>
                                 <button class="connect-btn btn" data-receiver-id="<?= $profile['user_id'] ?>">Connect</button>
-                            <?php elseif ($status === 0): ?>
+                            <?php elseif ($profile['status'] === 0 && $profile['sender_id'] == $_SESSION['user_id']): ?>
                                 <button class="btnd disabled" disabled>Request Sent</button>
-                            <?php elseif ($status === 1): ?>
+                            <?php elseif ($profile['status'] === 0 && $profile['receiver_id'] == $_SESSION['user_id']): ?>
+                                <button class="btnd disabled" disabled>Request Received</button>
+                            <?php elseif ($profile['status'] === 1): ?>
                                 <button class="contact">Contact Now</button>
-                            <?php elseif ($status === 2): ?>
+                            <?php elseif ($profile['status'] === 2): ?>
                                 <button class="btnd disabled" disabled>Request Rejected</button>
                             <?php endif; ?>
                         <?php else: ?>
@@ -80,7 +133,9 @@ $religions = $constants['religions'] ?? [];
             <?php } ?>
 
         </div>
-       <?php include __DIR__ . '/../layouts/pagination.php'; ?>
+        <?php if (empty($_POST)): ?>
+    <?php include __DIR__ . '/../layouts/pagination.php'; ?>
+<?php endif; ?>
     </section>
-    
+
 </main>

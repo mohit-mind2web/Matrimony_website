@@ -40,6 +40,9 @@ body {
     font-size: 28px;
   color: rgb(52 73 94 );
 }
+.profile-basic h3{
+  color: rgb(52 73 94 );
+}
 
 .profile-basic .meta {
     font-size: 16px;
@@ -144,3 +147,4 @@ body {
    padding: 8px 16px;
     cursor:not-allowed; 
 }
+

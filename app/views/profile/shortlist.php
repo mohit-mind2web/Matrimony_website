@@ -29,10 +29,12 @@
                              <?php
                             $status = $shortlist['status'] ?? null;
                             ?>
-                            <?php if ($status === null): ?>
+                            <?php if ($status === null ): ?>
                                 <button class="connect-btn btn" data-receiver-id="<?= $shortlist['user_id'] ?>">Connect</button>
-                            <?php elseif ($status === 0): ?>
-                                <button class="btnd disabled" disabled>Request Sent</button>
+                            <?php elseif ($status === 0 && $shortlist['sender_id']=== $_SESSION['user_id']): ?>
+                                <button class="btnd disabled" disabled>Interest Sent</button>
+                                  <?php elseif ($status === 0 && $shortlist['receiver_id']=== $_SESSION['user_id']): ?>
+                                <button class="btnd disabled" disabled> Interest Received</button>
                             <?php elseif ($status === 1): ?>
                               <a href="/user/profileview?id=<?= $shortlist['user_id']  ?>" class="contact">Contact Now</a>
                             <?php elseif ($status === 2): ?>
@@ -50,6 +52,6 @@
             <a href="/user/matches">View Matches</a>
         <?php } ?>
         </div>
-        
+         <?php include __DIR__ . '/../layouts/pagination.php'; ?> 
     </section>
 </main>
