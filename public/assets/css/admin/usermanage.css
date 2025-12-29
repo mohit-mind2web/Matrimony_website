@@ -1,0 +1,42 @@
+h2{
+    color: rgb(52 73 94);
+}
+.usermanage {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.usermanage th, 
+.usermanage td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+.usermanage th {
+    background: #1a2633;
+    color: white;
+}
+button{
+    background-color: #ef4b4b;
+    color: #fff;
+    font-size: 15px;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 6px;
+    margin-top: 10px;
+    transition: background 0.3s;
+    cursor: pointer;
+}
+td .green{
+    background-color: green;
+    padding: 5px 10px;
+    color: white;
+    border-radius: 8px;
+}
+td .red{
+    background-color: #ef4b4b;
+    padding: 5px 10px;
+    color: white;
+    border-radius: 8px;
+}

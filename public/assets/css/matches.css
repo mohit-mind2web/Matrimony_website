@@ -182,4 +182,8 @@ form input,select{
     border: none;
      font-size: 15px;
 }
-
+.view{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}

@@ -109,19 +109,24 @@ $religions = $constants['religions'] ?? [];
                         <p><?= htmlspecialchars($profile['city']) ?></p>
 
                         <?php if ($profile_complete): ?>
+                            <div class="view">
                             <a href="/user/profileview?id=<?= $profile['user_id'] ?>">View Profile</a>
 
-                            <?php if ($profile['status'] === null): ?>
+                            <?php if ($profile['status'] === null || $profile['status']==3): ?>
                                 <button class="connect-btn btn" data-receiver-id="<?= $profile['user_id'] ?>">Connect</button>
                             <?php elseif ($profile['status'] === 0 && $profile['sender_id'] == $_SESSION['user_id']): ?>
-                                <button class="btnd disabled" disabled>Request Sent</button>
+                                <button class="btnd disabled" disabled>Interest Sent</button>
                             <?php elseif ($profile['status'] === 0 && $profile['receiver_id'] == $_SESSION['user_id']): ?>
-                                <button class="btnd disabled" disabled>Request Received</button>
+                                <button class="btnd disabled" disabled>Interest Received</button>
                             <?php elseif ($profile['status'] === 1): ?>
-                                <button class="contact">Contact Now</button>
+                                <form method="POST" action="/user/matches/disconnect">
+                                    <input type="hidden" name="user_id" value="<?= $profile['user_id'] ?>">
+                                    <button type="submit" >Disconnect</button>
+                                </form>
                             <?php elseif ($profile['status'] === 2): ?>
                                 <button class="btnd disabled" disabled>Request Rejected</button>
                             <?php endif; ?>
+                            </div>
                         <?php else: ?>
                             <button disabled>View Profile </button>
                             <button onclick="alert('Please complete your profile first')"> Connect</button>

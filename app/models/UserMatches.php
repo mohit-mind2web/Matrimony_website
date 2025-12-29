@@ -209,4 +209,21 @@ class UserMatches extends Model
 
         return (int) $stmt->get_result()->fetch_assoc()['total'];
     }
+
+      public function disconnect($user_id, $other_user_id)
+    {
+        $sql = "UPDATE interests  SET status = 3  WHERE  (sender_id = ? AND receiver_id = ?)  OR
+                (sender_id = ? AND receiver_id = ?)";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param(
+            "iiii",
+            $user_id,
+            $other_user_id,
+            $other_user_id,
+            $user_id
+        );
+
+        return $stmt->execute();
+    }
 }

@@ -30,7 +30,7 @@ class ConnectRequest extends Model
     }
     public function checkExistingRequest($sender_id, $receiver_id)
     {
-        $sql = "SELECT id FROM interests WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)
+        $sql = "SELECT id FROM interests WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) AND status != 3
         LIMIT 1";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param('iiii', $sender_id, $receiver_id, $receiver_id, $sender_id);
@@ -39,7 +39,7 @@ class ConnectRequest extends Model
     }
     public function getreceivedrequest($user_id, $limit = 2, $offset = 0)
     {
-        $status = 1;
+        $status = 0;
         $sql = "SELECT i.*,u.fullname,p.user_id,p.city,p.profile_photo FROM interests i
         JOIN users u ON i.sender_id=u.id
         JOIN profiles p ON p.user_id = u.id
@@ -135,4 +135,16 @@ class ConnectRequest extends Model
         $stmt->execute();
         return (int) $stmt->get_result()->fetch_assoc()['total'];
     }
+    public function reconnect($sender_id, $receiver_id)
+{
+    $sql = "UPDATE interests SET status = 0,  sender_id = ?, receiver_id = ?
+            WHERE ((sender_id = ? AND receiver_id = ?)OR (sender_id = ? AND receiver_id = ?))
+            AND status = 3";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param("iiiiii",$sender_id,$receiver_id,$sender_id,$receiver_id,$receiver_id,$sender_id
+    );
+
+    return $stmt->execute();
+}
 }

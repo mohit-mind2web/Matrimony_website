@@ -60,9 +60,10 @@ $(document).ready(function() {
 
 
     // Submit filters using ajax
+    let filterActive = false;
     $('#filterForm').on('submit', function (e) {
         e.preventDefault();
-
+        filterActive = true;
         $.ajax({
             url: '/user/matches/filter',
             type: 'POST',
@@ -89,21 +90,33 @@ $(document).ready(function() {
         }
     });
 });
+$(document).on('click', '.pagination a', function (e) {
 
+    if (!filterActive) return; // let normal pagination work
+
+    e.preventDefault();
+
+    let page = new URL($(this).attr('href'), window.location.origin)
+                    .searchParams.get('page');
+
+    let data = $('#filterForm').serializeArray();
+    data.push({ name: 'page', value: page });
+
+    $.ajax({
+        url: '/user/matches/filter',
+        type: 'POST',
+        data: $.param(data),
+        success: function (res) {
+            $('#profilesContainer').html(res);
+        }
+    });
+});
 
     // Reset filters
-    $('#resetFilters').on('click', function () {
-        $('#filterForm')[0].reset();
-
-        $.ajax({
-            url: '/user/matches/filter',
-            type: 'POST',
-            data: {},
-            success: function (response) {
-                $('#profilesContainer').html(response);
-            }
-        });
-    });
+      $('#resetFilters').on('click', function () {
+    filterActive=false;
+    window.location.href = '/user/matches';
+});
 
 
 

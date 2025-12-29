@@ -50,4 +50,37 @@ class Profile extends Model
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
+     //edit
+    public function getProfileByUserId($user_id)
+    {
+        $sql = "SELECT * FROM profiles WHERE user_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
+    public function updateProfile($user_id, $data)
+    {
+        $sql = "UPDATE profiles SET profile_photo = ?, mobileno = ?, dob = ?, gender = ?, religion_id = ?, education_id = ?,
+                profession_id = ?, height_id = ?, city = ?, about_me = ?
+              WHERE user_id = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param(
+            "sssiiiiissi",
+            $data['profile_photo'],
+            $data['mobileno'],
+            $data['dob'],
+            $data['gender'],
+            $data['religion_id'],
+            $data['education_id'],
+            $data['profession_id'],
+            $data['height_id'],
+            $data['city'],
+            $data['about_me'],
+            $user_id
+        );
+
+        return $stmt->execute();
+    }
 }

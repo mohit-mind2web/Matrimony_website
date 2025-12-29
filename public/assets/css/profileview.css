@@ -16,11 +16,17 @@ body {
 }
 
 .profile-header {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 30px;
     border-bottom: 1px solid #eee;
     padding-bottom: 20px;
+}
+.profile-header .edit{
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
 .profile-photod {
@@ -40,8 +46,10 @@ body {
     font-size: 28px;
   color: rgb(52 73 94 );
 }
-.profile-basic h3{
-  color: rgb(52 73 94 );
+.profile-basic h4{
+  font-size: 16px;
+    color: #555;
+    margin: 5px 0;
 }
 
 .profile-basic .meta {
@@ -146,5 +154,24 @@ body {
 .btnd{
    padding: 8px 16px;
     cursor:not-allowed; 
+}
+.editprofile{
+    padding: 8px 16px;
+    background: #ef4b4b;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.disconnect{
+    padding: 8px 16px;
+    background: #ef4b4b;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+
 }
 

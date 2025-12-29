@@ -18,8 +18,8 @@
             <label>Email</label><br>
             <input type="text" name="email" placeholder=" Enter your Email" required><br><br>
             <label>Password</label><br>
-            <input type="text" name="password" placeholder=" Enter password" required><br>
-            <p>New User?<a href="/register">Register here</a></p>
+            <input type="password" name="password" placeholder=" Enter password" required><br>
+            <p>New User ? <a href="/register">Register here</a></p>
             <button type="submit">Login</button>
     </form>
 

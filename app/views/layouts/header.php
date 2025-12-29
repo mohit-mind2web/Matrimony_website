@@ -17,12 +17,20 @@
       <i onclick="menu(event)" class="fas fa-bars menu-icon"></i>
       <div class="profile">
         <nav>
+          <?php if($_SESSION['role_id']==2):?>
           <ul>
-            <li><a href="/profile">View Profile</a></li>
-            <li><a href="/queries">Edit Profile</a></li>
-            <li><a href="/employee/contactsupport">Get Help</a></li>
+            <li><a href="/user/profileview?id=<?= $_SESSION['user_id'] ?>">View Profile</a></li>
+            <li> <a  href="/user/profileedit">Edit Profile</a></li>
+            <li><a href="/admin/managequeries">Get Help</a></li>
             <li><a href="/logout">Logout</a></li>
           </ul>
+          <?php else:?>
+            <ul>
+            <li><a href="/admin/managequeries">View Queries</a></li>
+            <li><a href="/logout">Logout</a></li>
+            </ul>
+            <?php endif;?>
+
         </nav>
       </div>
     </div>
@@ -30,6 +38,7 @@
 
 
     <div class="sidebar">
+       <?php if($_SESSION['role_id']==2):?>
       <ul>
         <li><a href="/user/matches">My Matches</a></li>
         <?php if ($_SESSION['profile_complete']!=1): ?>
@@ -37,9 +46,19 @@
         <?php endif; ?>
         <li><a href="/user/interests">Interests Received</a></li>
         <li><a href="/user/shortlists">Shortlists Profiles</a></li>
-        <li><a href="/user/search">Contact Support</a></li>
+        <li><a href="/user/contactsupport">Contact Support</a></li>
         <li><a href="/logout">Logout</a></li>
       </ul>
+       <?php endif;?>
+       <?php if($_SESSION['role_id']==1):?>
+        <ul>
+        <li><a href="/admin/dashboard">Dashboard</a></li>
+        <li><a href="/admin/usermanage">Manage Users</a></li>
+        <li><a href="/admin/managereports">Manage Reports</a></li>
+        <li><a href="/admin/managequeries">Manage Queries</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+      <?php endif;?>
         </div>
 
 

@@ -75,7 +75,6 @@ class AuthController extends Controller
     {
         Auth::redirectIfLoggedIn();
         $this->render('auth/login');
-
     }
     public function login()
     {
@@ -90,7 +89,10 @@ class AuthController extends Controller
         $user = $loginModel->getuser($email);
         if (!$user) {
             $errors[] = "Email Not found";
-        } elseif (!password_verify($password, $user['password'])) {
+        } elseif($user['status']==0){
+            $errors[]="Your Account has been blocked by admin";
+        }
+        elseif (!password_verify($password, $user['password'])) {
             $errors[] = "Password Incorrect";
         }
         if (!empty($errors)) {
@@ -102,13 +104,18 @@ class AuthController extends Controller
         $_SESSION['fullname'] = $user['fullname'];
         $_SESSION['profile_complete'] = $user['profile_complete'];
 
-        if ($_SESSION['profile_complete'] == 1) {
-            header('Location: user/matches');
-            exit();
-        } else {
-            header('Location: user/profilecreate');
+        if ($_SESSION['role_id'] == 1) {
+            header('Location:/admin/dashboard');
             exit();
         }
+        if ($_SESSION['role_id'] == 2)
+            if ($_SESSION['profile_complete'] == 1) {
+                header('Location: user/matches');
+                exit();
+            } else {
+                header('Location: user/profilecreate');
+                exit();
+            }
     }
     public function logout()
     {
