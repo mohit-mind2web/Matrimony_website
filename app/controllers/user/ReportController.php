@@ -6,7 +6,7 @@ use App\models\ReportModel;
 
 class ReportController extends Controller{
     public function index(){
-        Auth::checkLogin();
+        Auth::requireRole([2]);
         $reporterId = $_SESSION['user_id'];
         $reportedUserId=$_POST['reported_id'];
          $reason = trim($_POST['reason'] ?? '');

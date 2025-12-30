@@ -32,5 +32,12 @@ class UserModel extends Model {
     $stmt->execute();
     return $stmt->get_result()->fetch_assoc();
 }
+public function getusersdata($user_id){
+    $sql="SELECT * FROM users where id=?";
+    $stmt=$this->conn->prepare($sql);
+     $stmt->bind_param('i', $user_id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+}
 
 }

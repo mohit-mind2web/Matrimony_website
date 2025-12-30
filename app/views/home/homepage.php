@@ -1,3 +1,6 @@
+<?php
+include '../app/views/layouts/head.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,17 +10,6 @@
     <title>Matrimony Website</title>
 </head>
 <body>
-    <header class="header">
-    <div class="logo">
-        <h1>Soul<span>Mates</span></h1>
-    </div>
-
-    <div class="auth-buttons">
-        <a href="/login" class="btn login-btn">Login</a>
-        <a href="/register" class="btn register-btn">Register</a>
-    </div>
-</header>
-
 <section class="hero">
     <div class="hero-content">
         <h2>Find Your Perfect Life Partner</h2>

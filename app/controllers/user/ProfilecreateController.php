@@ -26,6 +26,7 @@ class ProfilecreateController extends Controller
     //function to view profile craete form
     public function index()
     {
+        Auth::requireRole([2]);
         $this->render(
             'profile/profilecreation',
             $this->getdata()
@@ -36,7 +37,7 @@ class ProfilecreateController extends Controller
     //function to save profile details to dsahboard
     public function profile()
     {
-        Auth::checkLogin();
+        Auth::requireRole([2]);
         $constants = require APPROOT . '/config/constants.php';
 
         $allowedReligions   = array_keys($constants['religions']);

@@ -11,6 +11,7 @@
     <section>
       <div class="head"><h2>Shortlisted Profiles</h2></div>
          <div class="container">
+             <?php if ($profilecomplete): ?>
         <?php if (!empty($shortlistprofiles)) { ?>
             <?php foreach ($shortlistprofiles as $shortlist) { ?>
                 <div class="card">
@@ -51,6 +52,10 @@
             <p>No Shortlisted profiles! </p>
             <a href="/user/matches">View Matches</a>
         <?php } ?>
+        <?php else:?>
+            <p>Complete Your profile first to see shortlists users</p>
+            <a href="/user/profilecreate">Complete profile</a>
+            <?php endif;?>
         </div>
          <?php include __DIR__ . '/../layouts/pagination.php'; ?> 
     </section>

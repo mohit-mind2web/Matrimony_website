@@ -4,24 +4,28 @@ namespace App\models\admin;
 
 use App\core\Model;
 
-class ReportModel extends Model
+class QueriesModel extends Model
 {
-    public function getallreports($filters, $limit, $offset = 0)
+    public function getqueries($filters, $limit = 5, $offset = 0)
     {
-        $sql = "SELECT r.*, u1.fullname AS reporter_name,u2.fullname AS reported_name
-            FROM reports r
-            JOIN users u1 ON r.reporter_id = u1.id
-            JOIN users u2 ON r.reported_id = u2.id";
+        $sql = "SELECT * FROM queries";
         $params = [];
         $types = "";
         $conditions = [];
+
+        if (!empty($filters['name'])) {
+            $conditions[] = "(fullname LIKE ? OR email LIKE ?)";
+            $params[] = "%" . $filters['name'] . "%";
+            $params[] = "%" . $filters['name'] . "%";
+            $types .= "ss";
+        }
         if ($filters['status'] !== '') {
-            $conditions[] = "r.status= ?";
-            $params[] = (int) $filters['status'];
+            $conditions[] = "status = ?";
+            $params[] = (int)$filters['status'];
             $types .= "i";
         }
         if (!empty($filters['date_range'])) {
-            $dates = explode("to", $filters['date_range']);
+            $dates = explode(" to ", $filters['date_range']);
             if (count($dates) == 2) {
                 $conditions[] = "DATE(created_at) BETWEEN ? AND ?";
                 $params[] = $dates[0];
@@ -43,19 +47,26 @@ class ReportModel extends Model
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getcountreports($filters)
+    public function countqueries($filters)
     {
-        $sql = "SELECT COUNT(*) AS total FROM reports r";
+        $sql = "SELECT COUNT(*) AS total FROM queries";
         $params = [];
         $types = "";
         $conditions = [];
+
+        if (!empty($filters['name'])) {
+            $conditions[] = "(fullname LIKE ? OR email LIKE ?)";
+            $params[] = "%" . $filters['name'] . "%";
+            $params[] = "%" . $filters['name'] . "%";
+            $types .= "ss";
+        }
         if ($filters['status'] !== '') {
-            $conditions[] = "r.status= ?";
-            $params[] = (int) $filters['status'];
+            $conditions[] = "status = ?";
+            $params[] = (int)$filters['status'];
             $types .= "i";
         }
         if (!empty($filters['date_range'])) {
-            $dates = explode("to", $filters['date_range']);
+            $dates = explode(" to ", $filters['date_range']);
             if (count($dates) == 2) {
                 $conditions[] = "DATE(created_at) BETWEEN ? AND ?";
                 $params[] = $dates[0];
@@ -74,12 +85,11 @@ class ReportModel extends Model
         return (int) $stmt->get_result()->fetch_assoc()['total'];
     }
 
-
-    public function updateStatus($reportId, $status)
+    public function updatequerystatus($queryid, $status)
     {
-        $sql = "UPDATE reports SET status=? WHERE id=?";
+        $sql = "UPDATE queries SET status=? WHERE id=?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ii", $status, $reportId);
+        $stmt->bind_param("ii", $status, $queryid);
         return $stmt->execute();
     }
 }

@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+include '../app/views/layouts/head.php';
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -9,6 +10,7 @@
 </head>
 
 <body>
+    <main>
     <section>
         <h3>Welcome Register Here!</h3>
         <?php if (!empty($errors)) { ?>
@@ -35,7 +37,6 @@
         </form>
 
     </section>
-
+</main>
+ <?php include '../app/views/layouts/footer.php'; ?>
 </body>
-
-</html>

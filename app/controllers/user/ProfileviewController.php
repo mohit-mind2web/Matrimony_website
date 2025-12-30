@@ -5,7 +5,7 @@ use App\core\Controller;
 use App\models\Profile;
 class ProfileviewController extends Controller{
     public function profileview(){
-         Auth::checkLogin();
+       Auth::requireRole([2]);
           
     $user_id = $_GET['id'] ?? null; 
     $viewer_id=$_SESSION['user_id'];

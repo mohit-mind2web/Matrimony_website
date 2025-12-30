@@ -2,6 +2,7 @@
 require_once __DIR__  . '/../app/config/bootstrap.php';
 
 use App\controllers\admin\DashboardController;
+use App\controllers\admin\QueriesController;
 use App\controllers\admin\ReportController as AdminReportController;
 use App\controllers\user\ReportController;
 use App\controllers\admin\UserController;
@@ -52,15 +53,24 @@ $router->post('/user/matches/disconnect', [ConnectController::class, 'disconnect
 $router->get('/admin/dashboard',[DashboardController::class,'index']);
 //usermanage
 $router->get('/admin/usermanage',[UserController::class,'index']);
+$router->post('/admin/usermanage',[UserController::class,'index']);
 $router->post('/admin/user/action',[UserController::class,'toggle']);
 
 $router->post('/user/report',[ReportController::class,'index']);
 
 //manage reports
 $router->get('/admin/managereports',[AdminReportController::class,'index']);
+$router->post('/admin/managereports',[AdminReportController::class,'index']);
 $router->post('/admin/reports/status', [AdminReportController::class, 'updateStatus']);
 
 //contact
 $router->get('/user/contactsupport',[ContactController::class,'index']);
+$router->post('/user/contactsupport',[ContactController::class,'index']);
+
+//admin manage queries route
+$router->get('/admin/managequeries',[QueriesController::class,'index']);
+$router->post('/admin/managequeries',[QueriesController::class,'index']);
+
+$router->post('/admin/queries/status',[QueriesController::class,'updatequery']);
 
 $router->dispatch();

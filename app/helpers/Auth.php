@@ -25,7 +25,7 @@ class Auth
 
         if (!in_array($_SESSION['role_id'], $roles)) {
             header("HTTP/1.0 403 Forbidden");
-            include __DIR__ . '/../views/layout/access.php';
+            require __DIR__ . '/../views/layouts/access.php';
             exit();
         }
     }

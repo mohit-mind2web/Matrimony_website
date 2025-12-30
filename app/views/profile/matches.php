@@ -23,9 +23,7 @@ $religions = $constants['religions'] ?? [];
         </div>
         <div class="form">
             <form id="filterForm" class="filter-form">
-
                 <input type="text" name="city" placeholder="City">
-
                 <select name="age_from">
                     <option value="">Age From</option>
                     <?php for ($i = 18; $i <= 60; $i++): ?>
@@ -94,7 +92,9 @@ $religions = $constants['religions'] ?? [];
                 <?php foreach ($profiles as $profile) { ?>
                     <div class="card">
                         <div class="shortlist-icon" data-profile-id="<?= $profile['user_id'] ?>">
+                            <?php if($profile_complete):?>
                             <i class="<?= !empty($profile['is_shortlist']) ? 'fa-solid' : 'fa-regular' ?> fa-star"></i>
+                            <?php endif;?>
                         </div>
 
                         <img src="/uploads/<?= $profile['profile_photo'] ?? 'default.png' ?>" width="120">

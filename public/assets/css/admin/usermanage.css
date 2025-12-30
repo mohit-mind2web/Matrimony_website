@@ -40,3 +40,26 @@ td .red{
     color: white;
     border-radius: 8px;
 }
+
+.filter form{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.filter form input{
+    width: 300px;
+}
+.filter form input,select{
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    background: transparent;
+        color: #656363;
+}
+form .reset{
+    width: 100px;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-top: 0px;
+}
+

@@ -7,7 +7,7 @@ use App\models\ShortlistModel;
 
 class ShortlistController extends Controller{
     public function index(){
-        Auth::checkLogin();
+       Auth::requireRole([2]);
         $profilecomplete=$_SESSION['profile_complete'];
         $user_id=$_SESSION['user_id'];
         $shortlistModel=new ShortlistModel();

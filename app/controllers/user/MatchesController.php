@@ -12,7 +12,7 @@ class MatchesController extends Controller
 {
     public function index()
     {
-        Auth::checkLogin();
+        Auth::requireRole([2]);
 
         $constants = require APPROOT . '/config/constants.php';
         $user_id = $_SESSION['user_id'];

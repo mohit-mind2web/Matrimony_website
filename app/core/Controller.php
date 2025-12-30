@@ -21,8 +21,5 @@ class Controller{
             die("View file not found: {$view}.php");
         }
         require_once $viewPath;
-
     }
-   
-
 }

@@ -9,7 +9,7 @@ class InterestsController extends Controller
 {
     public function index()
     {
-        Auth::checkLogin();
+        Auth::requireRole([2]);
         $user_id = $_SESSION['user_id'];
         $interestModel = new ConnectRequest();
         $totalsent=$interestModel->countsentinterest($user_id);

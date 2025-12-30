@@ -46,7 +46,7 @@
         <?php endif; ?>
         <li><a href="/user/interests">Interests Received</a></li>
         <li><a href="/user/shortlists">Shortlists Profiles</a></li>
-        <li><a href="/user/contactsupport">Contact Support</a></li>
+        <li><a href="/user/contactsupport">Help & Support</a></li>
         <li><a href="/logout">Logout</a></li>
       </ul>
        <?php endif;?>

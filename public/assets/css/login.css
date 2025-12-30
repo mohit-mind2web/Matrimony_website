@@ -1,18 +1,12 @@
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
-}
 
-div {
-    width: 350px;
+section {
+    width: 420px;
     margin: 100px auto;
     background: #fff;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
 }
-
 h3 {
     text-align: center;
     color: #333;
