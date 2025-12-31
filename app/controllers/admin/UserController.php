@@ -31,7 +31,7 @@ class UserController extends Controller
         ];
         $userModel = new UserModel();
         $total = $userModel->getcountusers($filters);
-        $pagination = Pagination::pagination($total, 5);
+        $pagination = Pagination::pagination($total, 10);
         $userdetails = $userModel->getallusers($filters, $pagination['limit'], $pagination['offset']);
         $this->view('/admin/manageusers', [
             'userdetails' => $userdetails,

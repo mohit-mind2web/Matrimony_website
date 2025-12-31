@@ -6,7 +6,7 @@ use App\core\Model;
 
 class UserMatches extends Model
 {
-    public function getprofiles($user_id, $gender = null, $limit = 3, $offset = 0)
+    public function getprofiles($user_id, $gender = null, $limit=null, $offset = 0)
     {
         if ($gender !== null) {
             $sql = "SELECT p.*, u.fullname,i.sender_id,i.receiver_id,(s.id IS NOT NULL) AS is_shortlist,TIMESTAMPDIFF(YEAR, p.dob, CURDATE()) AS age,i.status
@@ -150,6 +150,7 @@ class UserMatches extends Model
 
         $sql = "SELECT COUNT(*) AS total
             FROM profiles p
+            JOIN users u ON p.user_id = u.id
             WHERE p.user_id != ?";
 
         $params = [$user_id];

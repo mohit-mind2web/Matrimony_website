@@ -7,6 +7,7 @@ $religions = $constants['religions'] ?? [];
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/css/matches.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/assets/js/cookie.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/assets/js/connect.js"></script>
     <title>Document</title>
@@ -92,9 +93,9 @@ $religions = $constants['religions'] ?? [];
                 <?php foreach ($profiles as $profile) { ?>
                     <div class="card">
                         <div class="shortlist-icon" data-profile-id="<?= $profile['user_id'] ?>">
-                            <?php if($profile_complete):?>
-                            <i class="<?= !empty($profile['is_shortlist']) ? 'fa-solid' : 'fa-regular' ?> fa-star"></i>
-                            <?php endif;?>
+                            <?php if ($profile_complete): ?>
+                                <i class="<?= !empty($profile['is_shortlist']) ? 'fa-solid' : 'fa-regular' ?> fa-star"></i>
+                            <?php endif; ?>
                         </div>
 
                         <img src="/uploads/<?= $profile['profile_photo'] ?? 'default.png' ?>" width="120">
@@ -110,26 +111,26 @@ $religions = $constants['religions'] ?? [];
 
                         <?php if ($profile_complete): ?>
                             <div class="view">
-                            <a href="/user/profileview?id=<?= $profile['user_id'] ?>">View Profile</a>
+                                <a href="/user/profileview?id=<?= $profile['user_id'] ?>">View Profile</a>
 
-                            <?php if ($profile['status'] === null || $profile['status']==3): ?>
-                                <button class="connect-btn btn" data-receiver-id="<?= $profile['user_id'] ?>">Connect</button>
-                            <?php elseif ($profile['status'] === 0 && $profile['sender_id'] == $_SESSION['user_id']): ?>
-                                <button class="btnd disabled" disabled>Interest Sent</button>
-                            <?php elseif ($profile['status'] === 0 && $profile['receiver_id'] == $_SESSION['user_id']): ?>
-                                <button class="btnd disabled" disabled>Interest Received</button>
-                            <?php elseif ($profile['status'] === 1): ?>
-                                <form method="POST" action="/user/matches/disconnect">
-                                    <input type="hidden" name="user_id" value="<?= $profile['user_id'] ?>">
-                                    <button type="submit" >Disconnect</button>
-                                </form>
-                            <?php elseif ($profile['status'] === 2): ?>
-                                <button class="btnd disabled" disabled>Request Rejected</button>
-                            <?php endif; ?>
+                                <?php if ($profile['status'] === null || $profile['status'] == 3): ?>
+                                    <button class="connect-btn btn" data-receiver-id="<?= $profile['user_id'] ?>">Connect</button>
+                                <?php elseif ($profile['status'] === 0 && $profile['sender_id'] == $_SESSION['user_id']): ?>
+                                    <button class="btnd disabled" disabled>Interest Sent</button>
+                                <?php elseif ($profile['status'] === 0 && $profile['receiver_id'] == $_SESSION['user_id']): ?>
+                                    <button class="btnd disabled" disabled>Interest Received</button>
+                                <?php elseif ($profile['status'] === 1): ?>
+                                    <form method="POST" action="/user/matches/disconnect">
+                                        <input type="hidden" name="user_id" value="<?= $profile['user_id'] ?>">
+                                        <button type="submit">Disconnect</button>
+                                    </form>
+                                <?php elseif ($profile['status'] === 2): ?>
+                                    <button class="btnd disabled" disabled>Interest Rejected</button>
+                                <?php endif; ?>
                             </div>
                         <?php else: ?>
                             <button disabled>View Profile </button>
-                            <button onclick="alert('Please complete your profile first')"> Connect</button>
+                            <button onclick="openModal()"> Connect</button>
                         <?php endif; ?>
                     </div>
                 <?php } ?>
@@ -138,9 +139,31 @@ $religions = $constants['religions'] ?? [];
             <?php } ?>
 
         </div>
-        <?php if (empty($_POST)): ?>
-    <?php include __DIR__ . '/../layouts/pagination.php'; ?>
-<?php endif; ?>
-    </section>
 
+        <!-- Custom Modal for Incomplete Profile -->
+        <div id="completeProfileModal" class="modal-overlay" style="display: none;">
+            <div class="modal-content-box">
+                <span class="close-modal">&times;</span>
+                <div class="modal-icon">
+                    <i class="fa-solid fa-user-lock"></i>
+                </div>
+                <h3>Complete Your Profile</h3>
+                <p>You need to complete your profile to connect with matches.</p>
+                <a href="/user/profilecreate" class="btn-modal">Complete Now</a>
+            </div>
+        </div>
+
+        <div id="cookiebanner">
+            <p> We use cookies to improve your experience. By continuing, you accept the use of cookies.
+                <a href="/cookie-policy" style="color: lightblue;">Learn more</a>
+            </p>
+            <div>
+                <button id="acceptcookies">Accept </button>
+                <button id="declinecookies"> Decline</button>
+            </div>
+        </div>
+        <?php if (empty($_POST)): ?>
+            <?php include __DIR__ . '/../layouts/pagination.php'; ?>
+        <?php endif; ?>
+    </section>
 </main>

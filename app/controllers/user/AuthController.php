@@ -1,7 +1,7 @@
 <?php
 
 namespace App\controllers\user;
-
+use App\helpers\Mailer;
 use App\core\Controller;
 use App\models\UserModel;
 use App\helpers\Auth;
@@ -58,6 +58,8 @@ class AuthController extends Controller
         }
 
         if ($userModel->create($data)) {
+            // Send welcome email
+            Mailer::sendWelcomeEmail($email, $fullname);
             header('Location: /login');
             exit();
         }

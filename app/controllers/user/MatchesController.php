@@ -27,7 +27,7 @@ class MatchesController extends Controller
         }
         $matchesModel = new UserMatches();
         $total = $matchesModel->countprofiles($user_id, $gender);
-        $pagination = Pagination::pagination($total, 3);
+        $pagination = Pagination::pagination($total, 6);
         $profiles = $matchesModel->getprofiles($user_id, $gender, $pagination['limit'], $pagination['offset']);
         $this->view('profile/matches', [
             'profiles' => $profiles,

@@ -8,4 +8,8 @@ class HomeController extends Controller{
         $this->render('home/homepage');
 
     }
+
+    public function cookiePolicy(){
+        $this->render('home/cookiepolicy'); 
+    }
 }

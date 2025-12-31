@@ -1,27 +1,27 @@
-$(document).ready(function() {
+$(document).ready(function () {
     //connect button functionality
-    $('.connect-btn').on('click', function() {
+    $('.connect-btn').on('click', function () {
         var button = $(this);
-        var receiverId = button.data('receiver-id'); 
+        var receiverId = button.data('receiver-id');
         $.ajax({
-            url: '/connect/send', 
+            url: '/connect/send',
             method: 'POST',
             data: { receiver_id: receiverId },
-            success: function(response) {
+            success: function (response) {
                 var result = JSON.parse(response);
                 if (result.success) {
-                    if(result.status === 0){
+                    if (result.status === 0) {
                         button.text('Interest Sent');
                         button.prop('disabled', true);
                         button.addClass('btnd');
-                    } else if(result.status === 1){
+                    } else if (result.status === 1) {
                         button.text('Contact Now');
                     }
                 } else {
                     alert('Request already sent');
                 }
             },
-            error: function() {
+            error: function () {
                 alert('There was an error sending the request.');
             }
         });
@@ -30,9 +30,9 @@ $(document).ready(function() {
 
     //shorlist functinality
     $(document).on('click', '.shortlist-icon', function (e) {
-        e.preventDefault(); 
+        e.preventDefault();
         let icon = $(this).find('i');
-        let text = $(this).find('.shortlist-text'); 
+        let text = $(this).find('.shortlist-text');
         let shortlist_id = $(this).data('profile-id');
         $.ajax({
             url: '/shortlist/toggle',
@@ -44,11 +44,11 @@ $(document).ready(function() {
 
                 if (result.status === 'added') {
                     icon.removeClass('fa-regular').addClass('fa-solid');
-                     if (text.length) text.text('Shortlisted');
+                    if (text.length) text.text('Shortlisted');
 
                 } else if (result.status === 'removed') {
                     icon.removeClass('fa-solid').addClass('fa-regular');
-                      if (text.length) text.text('Shortlist');
+                    if (text.length) text.text('Shortlist');
                 }
             },
             error: function () {
@@ -56,9 +56,6 @@ $(document).ready(function() {
             }
         });
     });
-
-
-
     // Submit filters using ajax
     let filterActive = false;
     $('#filterForm').on('submit', function (e) {
@@ -74,50 +71,64 @@ $(document).ready(function() {
         });
     });
 
-    $(document).on('click', '.page-link', function(e){
-    e.preventDefault();
-    let page = $(this).data('page');
+    $(document).on('click', '.page-link', function (e) {
+        e.preventDefault();
+        let page = $(this).data('page');
 
-    let data = $('#filterForm').serializeArray();
-    data.push({name:'page', value: page}); 
+        let data = $('#filterForm').serializeArray();
+        data.push({ name: 'page', value: page });
 
-    $.ajax({
-        url: '/user/matches/filter',
-        type: 'POST',
-        data: $.param(data),
-        success: function(res){
-            $('#profilesContainer').html(res);
-        }
+        $.ajax({
+            url: '/user/matches/filter',
+            type: 'POST',
+            data: $.param(data),
+            success: function (res) {
+                $('#profilesContainer').html(res);
+            }
+        });
     });
-});
-$(document).on('click', '.pagination a', function (e) {
+    $(document).on('click', '.pagination a', function (e) {
 
-    if (!filterActive) return; // let normal pagination work
+        if (!filterActive) return;
 
-    e.preventDefault();
+        e.preventDefault();
 
-    let page = new URL($(this).attr('href'), window.location.origin)
-                    .searchParams.get('page');
+        let page = new URL($(this).attr('href'), window.location.origin)
+            .searchParams.get('page');
 
-    let data = $('#filterForm').serializeArray();
-    data.push({ name: 'page', value: page });
+        let data = $('#filterForm').serializeArray();
+        data.push({ name: 'page', value: page });
 
-    $.ajax({
-        url: '/user/matches/filter',
-        type: 'POST',
-        data: $.param(data),
-        success: function (res) {
-            $('#profilesContainer').html(res);
-        }
+        $.ajax({
+            url: '/user/matches/filter',
+            type: 'POST',
+            data: $.param(data),
+            success: function (res) {
+                $('#profilesContainer').html(res);
+            }
+        });
     });
-});
 
     // Reset filters
-      $('#resetFilters').on('click', function () {
-    filterActive=false;
-    window.location.href = '/user/matches';
+    $('#resetFilters').on('click', function () {
+        filterActive = false;
+        window.location.href = '/user/matches';
+    });
 });
 
+// Modal Logic
+function openModal() {
+    document.getElementById('completeProfileModal').style.display = 'flex';
+}
 
+$(document).ready(function () {
+    $('.close-modal').on('click', function () {
+        $('#completeProfileModal').hide();
+    });
 
+    $(window).on('click', function (event) {
+        if (event.target == document.getElementById('completeProfileModal')) {
+            $('#completeProfileModal').hide();
+        }
+    });
 });

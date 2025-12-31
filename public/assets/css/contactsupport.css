@@ -31,14 +31,20 @@ section h3{
     width: 100%;
     margin-top: 5px;
 }
+.contact-form input[readonly] {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    color: #6c757d;
+}
+
 button{
     background-color: #ef4b4b;
-   color: white;
-   padding: 10px 20px;
-   border-radius: 10px;  
-   border: none;
-   cursor: pointer;
-   float: right;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;  
+    border: none;
+    cursor: pointer;
+    float: right;
 }
 .contact-support{
     background-color: aliceblue;

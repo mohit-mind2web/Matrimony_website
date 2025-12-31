@@ -20,13 +20,13 @@
         <?php endif; ?>
         <div class="filter">
             <form method="post" id="reportFilterForm" action="/admin/managereports">
+                <input type="text" id="date_range" name="date_range" value="<?= $filters['date_range'] ?? '' ?>" placeholder="Select Date Range">
                 <select name="status" onchange="this.form.submit()">
                     <option value="">All Status</option>
                     <option value="0" <?= ($filters['status'] ?? '') === '0' ? 'selected' : '' ?>>Pending</option>
                     <option value="1" <?= ($filters['status'] ?? '') === '1' ? 'selected' : '' ?>>Reviewed</option>
                     <option value="2" <?= ($filters['status'] ?? '') === '2' ? 'selected' : '' ?>>Resolved</option>
                 </select>
-                <input type="text" id="date_range" name="date_range" value="<?= $filters['date_range'] ?? '' ?>" placeholder="Select Date Range">
                 <button type="submit" class="reset" name="reset_filters" value=1>reset</button>
             </form>
         </div>

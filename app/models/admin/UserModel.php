@@ -6,7 +6,7 @@ use App\core\Model;
 
 class UserModel extends Model
 {
-    public function getallusers($filters, $limit, $offset = 0)
+    public function getallusers($filters, $limit=10, $offset = 0)
     {
         $sql = "SELECT * from users WHERE role_id=2 ";
         $params = [];

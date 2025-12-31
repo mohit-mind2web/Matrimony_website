@@ -18,4 +18,12 @@ class ContactModel extends Model{
         return $stmt->execute();
         
     }
+
+    public function getRecentQueries($limit = 5) {
+        $sql = "SELECT * FROM queries ORDER BY created_at DESC LIMIT ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param('i', $limit);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
 }

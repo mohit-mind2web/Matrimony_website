@@ -21,6 +21,7 @@ session_start();
 $router = new Router();
 //homepage route
 $router->get('/',[HomeController::class,'index']);
+$router->get('/cookie-policy', [HomeController::class, 'cookiePolicy']);
 //register
 $router->get('/register', [AuthController::class, 'registerform']);
 $router->post('/register', [AuthController::class, 'register']);
@@ -51,19 +52,19 @@ $router->post('/user/matches/disconnect', [ConnectController::class, 'disconnect
 
 //admindashboard
 $router->get('/admin/dashboard',[DashboardController::class,'index']);
-//usermanage
+// admin usermanage
 $router->get('/admin/usermanage',[UserController::class,'index']);
 $router->post('/admin/usermanage',[UserController::class,'index']);
 $router->post('/admin/user/action',[UserController::class,'toggle']);
 
 $router->post('/user/report',[ReportController::class,'index']);
 
-//manage reports
+//admin manage reports
 $router->get('/admin/managereports',[AdminReportController::class,'index']);
 $router->post('/admin/managereports',[AdminReportController::class,'index']);
 $router->post('/admin/reports/status', [AdminReportController::class, 'updateStatus']);
 
-//contact
+//user contact
 $router->get('/user/contactsupport',[ContactController::class,'index']);
 $router->post('/user/contactsupport',[ContactController::class,'index']);
 

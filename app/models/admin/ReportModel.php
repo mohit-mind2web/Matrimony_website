@@ -23,9 +23,9 @@ class ReportModel extends Model
         if (!empty($filters['date_range'])) {
             $dates = explode("to", $filters['date_range']);
             if (count($dates) == 2) {
-                $conditions[] = "DATE(created_at) BETWEEN ? AND ?";
-                $params[] = $dates[0];
-                $params[] = $dates[1];
+                $conditions[] = "DATE(r.created_at) BETWEEN ? AND ?";
+                $params[] = trim($dates[0]);
+                $params[] = trim($dates[1]);
                 $types .= "ss";
             }
         }
@@ -33,7 +33,7 @@ class ReportModel extends Model
             $sql .= " WHERE " . implode(" AND ", $conditions);
         }
 
-        $sql .= " ORDER BY created_at DESC LIMIT ? OFFSET ?";
+        $sql .= " ORDER BY r.created_at DESC LIMIT ? OFFSET ?";
         $params[] = $limit;
         $params[] = $offset;
         $types .= "ii";
@@ -57,9 +57,9 @@ class ReportModel extends Model
         if (!empty($filters['date_range'])) {
             $dates = explode("to", $filters['date_range']);
             if (count($dates) == 2) {
-                $conditions[] = "DATE(created_at) BETWEEN ? AND ?";
-                $params[] = $dates[0];
-                $params[] = $dates[1];
+                $conditions[] = "DATE(r.created_at) BETWEEN ? AND ?";
+                $params[] = trim($dates[0]);
+                $params[] = trim($dates[1]);
                 $types .= "ss";
             }
         }

@@ -21,7 +21,7 @@
           <ul>
             <li><a href="/user/profileview?id=<?= $_SESSION['user_id'] ?>">View Profile</a></li>
             <li> <a  href="/user/profileedit">Edit Profile</a></li>
-            <li><a href="/admin/managequeries">Get Help</a></li>
+            <li><a href="/user/contactsupport">Get Help</a></li>
             <li><a href="/logout">Logout</a></li>
           </ul>
           <?php else:?>
@@ -60,8 +60,8 @@
       </ul>
       <?php endif;?>
         </div>
-
-
+</body>
+</html>
  <script>
         function menu(event) {
             const profile = document.querySelector('.profile');
@@ -73,5 +73,3 @@
             }
         }
     </script>
-</body>
-</html>

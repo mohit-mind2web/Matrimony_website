@@ -5,9 +5,9 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="/assets/css/admin/usermanage.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="/assets/js/filters.js"></script>
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="/assets/js/filters.js"></script>
     
 </head>
     <main>
@@ -40,6 +40,7 @@
             <th>Fullname</th>
             <th>Email</th>
             <th>Subject</th>
+            <th>Message</th>
             <th>Status</th>
             <th>Received At</th>
             <th>Action</th>
@@ -55,6 +56,7 @@
                 </td>
                 <td><?= htmlspecialchars($query['email']) ?></td>
                 <td><?= htmlspecialchars($query['subject']) ?></td>
+                 <td><?= htmlspecialchars($query['message']) ?></td>
 
                 <td>
                     <?php echo match ($query['status']) {
