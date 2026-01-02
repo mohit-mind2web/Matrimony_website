@@ -153,7 +153,7 @@ $religions = $constants['religions'] ?? [];
             </div>
         </div>
 
-        <div id="cookiebanner">
+        <div id="cookiebanner" user-id="<?= $_SESSION['user_id'] ?? '' ?>">
             <p> We use cookies to improve your experience. By continuing, you accept the use of cookies.
                 <a href="/cookie-policy" style="color: lightblue;">Learn more</a>
             </p>

@@ -20,7 +20,7 @@ include '../app/views/layouts/head.php';
             <?php }?><br>
         <form method="POST">
             <label>Email</label><br>
-            <input type="text" name="email" placeholder=" Enter your Email" required><br>
+            <input type="email" name="email" placeholder=" Enter your Email" required><br>
             <label>Password</label><br>
             <input type="password" name="password" placeholder=" Enter password" required><br>
             <p>New User ? <a href="/register">Register here</a></p><br>

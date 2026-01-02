@@ -1,12 +1,14 @@
 <?php
 require_once __DIR__  . '/../app/config/bootstrap.php';
 
+use App\controllers\admin\ActivityLogController;
 use App\controllers\admin\DashboardController;
 use App\controllers\admin\QueriesController;
 use App\controllers\admin\ReportController as AdminReportController;
 use App\controllers\user\ReportController;
 use App\controllers\admin\UserController;
 use App\controllers\user\AuthController;
+use App\controllers\user\QueriesStatusController;
 use App\controllers\user\ConnectController;
 use App\controllers\user\ContactController;
 use App\controllers\user\HomeController;
@@ -33,7 +35,7 @@ $router->get('/logout', [AuthController::class, 'logout']);
 $router->get('/user/matches', [MatchesController::class, 'index']);
 //profile craete
 $router->get('/user/profilecreate', [ProfilecreateController::class, 'index']);
-$router->post('/user/profilecreate', [ProfilecreateController::class, 'profile']);
+$router->post('/user/profilecreate/profile', [ProfilecreateController::class, 'profile']);
 //profile view
 $router->get('/user/profileview', [ProfileviewController::class, 'profileview']);
 $router->post('/connect/send', [ConnectController::class, 'send']);
@@ -68,10 +70,14 @@ $router->post('/admin/reports/status', [AdminReportController::class, 'updateSta
 $router->get('/user/contactsupport',[ContactController::class,'index']);
 $router->post('/user/contactsupport',[ContactController::class,'index']);
 
+//user queries status
+$router->get('/user/queries',[QueriesStatusController::class,'index']);
+
 //admin manage queries route
 $router->get('/admin/managequeries',[QueriesController::class,'index']);
 $router->post('/admin/managequeries',[QueriesController::class,'index']);
 
 $router->post('/admin/queries/status',[QueriesController::class,'updatequery']);
+$router->get('/admin/activity-logs',[ActivityLogController::class,'index']);
 
 $router->dispatch();

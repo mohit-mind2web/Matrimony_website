@@ -1,6 +1,6 @@
 $(document).ready(function () {
     //connect button functionality
-    $('.connect-btn').on('click', function () {
+    $(document).on('click', '.connect-btn', function () {
         var button = $(this);
         var receiverId = button.data('receiver-id');
         $.ajax({
@@ -10,12 +10,12 @@ $(document).ready(function () {
             success: function (response) {
                 var result = JSON.parse(response);
                 if (result.success) {
-                    if (result.status === 0) {
+                    if (result.status == 0) {
                         button.text('Interest Sent');
                         button.prop('disabled', true);
                         button.addClass('btnd');
-                    } else if (result.status === 1) {
-                        button.text('Contact Now');
+                    } else if (result.status == 1) {
+                        button.text('Disconnect');
                     }
                 } else {
                     alert('Request already sent');
@@ -114,6 +114,30 @@ $(document).ready(function () {
         filterActive = false;
         window.location.href = '/user/matches';
     });
+
+    // Dependent Age Filters
+    const $ageFrom = $('select[name="age_from"]');
+    const $ageTo = $('select[name="age_to"]');
+
+    function updateAgeToOptions() {
+        const selectedFrom = parseInt($ageFrom.val()) || 18;
+        const selectedTo = parseInt($ageTo.val());
+
+        $ageTo.find('option').each(function () {
+            const val = parseInt($(this).val());
+            if (val && val < selectedFrom) {
+                $(this).hide();
+            } else {
+                $(this).show();
+            }
+        });
+        if (selectedTo && selectedTo < selectedFrom) {
+            $ageTo.val('');
+        }
+    }
+
+    $ageFrom.on('change', updateAgeToOptions);
+    updateAgeToOptions();
 });
 
 // Modal Logic

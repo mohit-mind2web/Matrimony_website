@@ -25,11 +25,11 @@ class ContactController extends Controller
                 (!isset($_POST['email']) || $_POST['email'] !== $email)) {
                 $errors[] = "Security Violation: Name or Email does not match your profile.";
             }
-            if (empty($subject) || strlen($subject) < 3 || !preg_match("/^[A-Za-z0-9 ]+$/", $subject)) {
-                $errors[] = "Subject must be at least 3 characters long and only contain letters, numbers, and spaces.";
+            if (empty($subject) || strlen($subject) < 3 || strlen($subject) > 100 || !preg_match("/^[A-Za-z0-9 ,.!?'-]+$/", $subject)) {
+                $errors[] = "Subject must be 3-100 characters long and only contain letters, numbers, and spaces.";
             }
-            if (empty($message) || strlen($message) < 10) {
-                $errors[] = "Message must be at least 10 characters long.";
+            if (empty($message) || strlen($message) < 10 || strlen($message) > 200) {
+                $errors[] = "Message must be 10-200 characters long.";
             }
             if (empty($errors)) {
                 $contactModel = new ContactModel();
@@ -46,12 +46,10 @@ class ContactController extends Controller
                 }
             }
         }
-
         $this->view('/profile/contact', [
             'success' => $success,
             'errors' => $errors,
             'userdetails' => $userdetails
-
         ]);
     }
 }

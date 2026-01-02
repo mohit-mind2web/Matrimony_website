@@ -25,7 +25,7 @@
     <img src="/uploads/<?= $profile['profile_photo'] ?>" width="100">
 
     <label>Mobile Number</label>
-    <input type="text" name="number" maxlength="10" value="<?= $profile['mobileno']  ?>" required>
+    <input type="text" name="number" maxlength="10" pattern="[6-9]\d{9}" title="Enter valid 10-digit mobile number starting with 6-9" value="<?= $profile['mobileno']  ?>" required>
 
     <label>Date of Birth</label>
     <input type="date" name="dob" value="<?= $profile['dob'] ?>" required>

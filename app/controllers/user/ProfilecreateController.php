@@ -5,6 +5,7 @@ namespace App\controllers\user;
 use App\core\Controller;
 use App\models\Profile;
 use App\helpers\Auth;
+use App\helpers\ActivityLogger;
 
 class ProfilecreateController extends Controller
 {
@@ -33,10 +34,10 @@ class ProfilecreateController extends Controller
         );
     }
 
-
-    //function to save profile details to dsahboard
+    //function to save profile details to profiles databse
     public function profile()
     {
+        try{
         Auth::requireRole([2]);
         $constants = require APPROOT . '/config/constants.php';
 
@@ -55,16 +56,7 @@ class ProfilecreateController extends Controller
         $city       = $_POST['city'];
         $aboutme    = $_POST['about_me'];
         $photoName = null;
-        if (!empty($_FILES['profile_photo']['name'])) {
 
-            $photoName = time() . '_' . $_FILES['profile_photo']['name'];
-        }
-        if (!empty($_FILES['profile_photo']['name'])) {
-            move_uploaded_file(
-                $_FILES['profile_photo']['tmp_name'],
-                APPROOT . '/../public/uploads/' . $photoName
-            );
-        }
         $errors = [];
         if ($mobile === '') {
             $errors['number'] = 'Mobile number is required';
@@ -79,7 +71,7 @@ class ProfilecreateController extends Controller
             $dobDate = \DateTime::createFromFormat('Y-m-d', $_POST['dob']);
             $errorsDate = \DateTime::getLastErrors();
 
-            if (!$dobDate || $errorsDate['warning_count'] > 0 || $errorsDate['error_count'] > 0) {
+            if (!$dobDate  ) {
                 $errors['dob'] = 'Invalid date format';
             } else {
                 $today = new \DateTime();
@@ -135,16 +127,18 @@ class ProfilecreateController extends Controller
 
 
         if ($aboutme !== '' && strlen($aboutme) > 250) {
-            $errors['about_me'] = 'About Me should not exceed 500 characters';
+            $errors['about_me'] = 'About Me should not exceed 250 characters';
         }
 
         if (!empty($_FILES['profile_photo']['name'])) {
 
             $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+            $allowedExtensions = ['jpg', 'jpeg', 'png'];
             $fileType = $_FILES['profile_photo']['type'];
             $fileSize = $_FILES['profile_photo']['size'];
+            $fileExtension = strtolower(pathinfo($_FILES['profile_photo']['name'], PATHINFO_EXTENSION));
 
-            if (!in_array($fileType, $allowedTypes)) {
+            if (!in_array($fileType, $allowedTypes) || !in_array($fileExtension, $allowedExtensions)) {
                 $errors['profile_photo'] = 'Only JPG and PNG images allowed';
             }
 
@@ -153,14 +147,23 @@ class ProfilecreateController extends Controller
             }
         }
         if (!empty($errors)) {
-            $this->view('profile/profilecreation', $this->getdata(['errors' => $errors]));
+            $this->render('profile/profilecreation', $this->getdata(['errors' => $errors]));
             return;
         }
+
+        if (!empty($_FILES['profile_photo']['name'])) {
+            $photoName = time() . '_' . $_FILES['profile_photo']['name'];
+            move_uploaded_file(
+                $_FILES['profile_photo']['tmp_name'],
+                APPROOT . '/../public/uploads/' . $photoName
+            );
+        }
+
         $data = [
             'user_id'      => $user_id,
             'profile_photo' => $photoName,
             'mobileno'     => $mobile,
-            'dob'          => $dobDate->format('Y-m-d'),
+            'dob'          => $dob,
             'gender' => (int)$gender,
             'religion_id'  => (int)$religion,
             'height_id'    => $height,
@@ -174,8 +177,19 @@ class ProfilecreateController extends Controller
         if ($profileModel->saveprofile($data)) {
             $profileModel->markProfileCompleted($user_id);
             $_SESSION['profile_complete'] = 1;
+            
+            // Log Profile Creation
+            ActivityLogger::log('PROFILE_CREATE', "User profile created", $user_id, 2);
+
             header("Location: /user/matches");
             exit;
+        }
+        }
+
+        Catch(\Exception $e)
+        {
+          echo"<pre>";
+        print_r($e->getMessage());die;
         }
     }
     public function edit()
@@ -211,19 +225,9 @@ class ProfilecreateController extends Controller
         $profession = $_POST['profession_id'];
         $city       = $_POST['city'];
         $aboutme    = $_POST['about_me'];
-
         $photoName = $_POST['old_photo'];
 
-        if (!empty($_FILES['profile_photo']['name'])) {
 
-            $photoName = time() . '_' . $_FILES['profile_photo']['name'];
-        }
-        if (!empty($_FILES['profile_photo']['name'])) {
-            move_uploaded_file(
-                $_FILES['profile_photo']['tmp_name'],
-                APPROOT . '/../public/uploads/' . $photoName
-            );
-        }
         $errors = [];
         if ($mobile === '') {
             $errors['number'] = 'Mobile number is required';
@@ -299,10 +303,12 @@ class ProfilecreateController extends Controller
         if (!empty($_FILES['profile_photo']['name'])) {
 
             $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+            $allowedExtensions = ['jpg', 'jpeg', 'png'];
             $fileType = $_FILES['profile_photo']['type'];
             $fileSize = $_FILES['profile_photo']['size'];
+            $fileExtension = strtolower(pathinfo($_FILES['profile_photo']['name'], PATHINFO_EXTENSION));
 
-            if (!in_array($fileType, $allowedTypes)) {
+            if (!in_array($fileType, $allowedTypes) || !in_array($fileExtension, $allowedExtensions)) {
                 $errors['profile_photo'] = 'Only JPG and PNG images allowed';
             }
 
@@ -323,6 +329,14 @@ class ProfilecreateController extends Controller
             return;
         }
 
+        if (!empty($_FILES['profile_photo']['name'])) {
+            $photoName = time() . '_' . $_FILES['profile_photo']['name'];
+            move_uploaded_file(
+                $_FILES['profile_photo']['tmp_name'],
+                APPROOT . '/../public/uploads/' . $photoName
+            );
+        }
+
         $data = [
             'profile_photo' => $photoName,
             'mobileno' => $mobile,
@@ -337,6 +351,9 @@ class ProfilecreateController extends Controller
         ];
 
         $profileModel->updateProfile($user_id, $data);
+
+        // Log Profile Update
+        ActivityLogger::log('PROFILE_UPDATE', "User profile updated", $user_id, 2);
 
         header("Location: /user/matches");
         exit;

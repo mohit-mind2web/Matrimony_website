@@ -84,5 +84,9 @@ a {
 a:hover {
     text-decoration: underline;
 }
+.success{
+    text-align: start;
+    color: green;
+}
 
 

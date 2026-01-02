@@ -1,6 +1,10 @@
 <?php 
 $currentTab = $pagination['tab'] ?? null; 
 ?>
+<head>
+    <link rel="stylesheet" href="/assets/css/pagination.css" />
+</head>
+<main>
     <?php if ($pagination['totalpages'] > 1): ?>
         <div class="pagination">
             <nav>

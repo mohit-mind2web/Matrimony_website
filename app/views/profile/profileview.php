@@ -58,7 +58,7 @@
               <?php if($profileview['user_id']!=$_SESSION['user_id']) :?>
             <?php if ($_SESSION['profile_complete'] == 1): ?>
                 <?php if ($profileview['status'] === null): ?>
-                    <button class="connect-btn btn" data-receiver-id="<?= $profileview['user_id'] ?>">Connect</button>
+                    <button class="connect-btn" data-receiver-id="<?= $profileview['user_id'] ?>">Connect</button>
                 <?php elseif ($profileview['status'] === 0 && $profileview['sender_id'] == $_SESSION['user_id']): ?>
                     <button class="btnd disabled" disabled>Interest Sent</button>
                 <?php elseif ($profileview['status'] === 0 && $profileview['receiver_id'] == $_SESSION['user_id']): ?>

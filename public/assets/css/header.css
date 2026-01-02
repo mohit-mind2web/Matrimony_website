@@ -41,6 +41,9 @@ body {
   user-select: none;
   color: #b92d2d;
 }
+.logo a{
+  text-decoration: none;
+}
 
 .logo h1 span {
   color: #ef4b4b; 

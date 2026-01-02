@@ -12,7 +12,7 @@ class ShortlistController extends Controller{
         $user_id=$_SESSION['user_id'];
         $shortlistModel=new ShortlistModel();
         $total=$shortlistModel->countshortlists($user_id);
-        $pagination=Pagination::pagination($total,3);
+        $pagination=Pagination::pagination($total,8);
         $shortlistprofiles=$shortlistModel->getallshortlists($user_id,$pagination['limit'],$pagination['offset']);
         $this->view('profile/shortlist',[
             'shortlistprofiles'=>$shortlistprofiles,

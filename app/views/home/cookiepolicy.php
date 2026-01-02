@@ -14,7 +14,7 @@
     </header>
 
     <section>
-        <p>Last updated: December 31, 2024</p>
+        <p>Last updated: December 31, 2025</p>
         <p>This Cookie Policy explains how Matrimony Website ("we", "us", and "our") uses cookies and similar technologies to recognize you when you visit our website.</p>
 
         <h2>What are cookies?</h2>
@@ -37,10 +37,10 @@
         <p>If you have any questions about our use of cookies or other technologies, please email us at support@matrimonywebsite.com.</p>
     </section>
 
-    <a href="/" class="btn-back">Back to Home</a>
+    <a href="/user/matches" class="btn-back">Back to Home</a>
 
     <div class="footer">
-        &copy; 2024 Matrimony Website. All rights reserved.
+        &copy; <?= date('Y') ?> Matrimony Website. All rights reserved.
     </div>
 </div>
 

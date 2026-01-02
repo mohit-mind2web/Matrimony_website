@@ -9,7 +9,7 @@
     <main>
         <section>
             <div class="container">
-                <div class="card">
+                <div class="card" onclick="totaluser()">
                     <h3>Total Users</h3>
                     <p><?= $totalcounts['totalusers'] ?></p>
                 </div>
@@ -32,7 +32,10 @@
             </div>
 
         <div class="recent-queries">
-            <h3>Recent Contact Queries</h3>
+            <div class="recentquery">
+                <h3>Recent Contact Queries</h3>
+                <a href="/admin/managequeries">Go to queries</a>
+            </div>
             <table class="table">
                 <thead>
                     <tr>
@@ -53,7 +56,7 @@
                             <td><?= htmlspecialchars($query['fullname']) ?></td>
                             <td><?= htmlspecialchars($query['email']) ?></td>
                             <td><?= htmlspecialchars($query['subject']) ?></td>
-                            <td><?= date('M d, Y', strtotime($query['created_at'])) ?></td>
+                            <td><?= date('d M Y', strtotime($query['created_at'])) ?></td>
                         </tr>
                         <?php endforeach; ?>
                     <?php else: ?>

@@ -5,6 +5,7 @@ use App\helpers\Mailer;
 use App\core\Controller;
 use App\models\UserModel;
 use App\helpers\Auth;
+use App\helpers\ActivityLogger;
 
 class AuthController extends Controller
 {
@@ -25,6 +26,7 @@ class AuthController extends Controller
         $email = $_POST['email'];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $errors = [];
+        $success='';
 
         if (!in_array($profile_for, [1, 2, 3, 4])) {
             $errors[] = 'Please select a valid profile type';
@@ -41,8 +43,8 @@ class AuthController extends Controller
             $errors[] = 'Email already registered';
         }
 
-        if (strlen($password) < 6) {
-            $errors[] = 'Password must be at least 6 characters';
+        if (strlen($password) < 6 || strlen($password) > 255) {
+            $errors[] = 'Password must be betwwen 6 to 255 characters';
         }
 
         $data = [
@@ -60,14 +62,24 @@ class AuthController extends Controller
         if ($userModel->create($data)) {
             // Send welcome email
             Mailer::sendWelcomeEmail($email, $fullname);
-            header('Location: /login');
-            exit();
+            // Log registration
+             $user = $userModel->getuser($email); // Fetch newly created user to get ID
+             if($user){
+                 ActivityLogger::log('REGISTER', "User registered with email: $email", $user['id'], 2);
+             } else {
+                 // Fallback if fetch fails, though unlikely
+                  ActivityLogger::log('REGISTER', "User registered with email: $email (ID fetch failed)");
+             }
+            $success = 'Registration successful! <a href="/login">Login Now</a>.';
+             $this->view('auth/register', ['success' => $success]);
+              return;
         }
 
         $this->view(
             'auth/register',
             [
-                'errors' => ['Registration failed. Please try again.']
+                'errors' => ['Registration failed. Please try again.'],
+                'success'=>$success
             ]
         );
     }
@@ -92,7 +104,8 @@ class AuthController extends Controller
         if (!$user) {
             $errors[] = "Email Not found";
         } elseif($user['status']==0){
-            $errors[]="Your Account has been blocked by admin";
+           $errors[] = "Your account has been blocked by admin. Please contact 
+                        <a href=\"mailto:admin@soulmates.com\">admin@soulmates.com</a>.";
         }
         elseif (!password_verify($password, $user['password'])) {
             $errors[] = "Password Incorrect";
@@ -105,6 +118,11 @@ class AuthController extends Controller
         $_SESSION['role_id'] = $user['role_id'];
         $_SESSION['fullname'] = $user['fullname'];
         $_SESSION['profile_complete'] = $user['profile_complete'];
+        
+        // Log Login
+        ActivityLogger::log('LOGIN', "User logged in: " . $user['email'], $user['id'], $user['role_id']);
+
+        setcookie('user_id', $_SESSION['user_id'], time() + (30 * 24 * 60 * 60), "/"); //30 days
 
         if ($_SESSION['role_id'] == 1) {
             header('Location:/admin/dashboard');
@@ -121,6 +139,7 @@ class AuthController extends Controller
     }
     public function logout()
     {
+        ActivityLogger::log('LOGOUT', "User logged out");
         Auth::logout();
     }
 }

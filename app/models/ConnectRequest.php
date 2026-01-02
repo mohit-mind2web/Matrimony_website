@@ -14,7 +14,7 @@ class ConnectRequest extends Model
         $stmt->bind_param('ii', $sender_id, $receiver_id);
         return $stmt->execute();
     }
-    public function getsentrequest($user_id, $limit = 2, $offset = 0)
+    public function getsentrequest($user_id, $limit , $offset = 0)
     {
         $status = 0;
         $sql = "SELECT i.*,u.fullname,p.user_id,p.city,p.profile_photo FROM interests i
@@ -30,14 +30,13 @@ class ConnectRequest extends Model
     }
     public function checkExistingRequest($sender_id, $receiver_id)
     {
-        $sql = "SELECT id FROM interests WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) AND status != 3
-        LIMIT 1";
+        $sql = "SELECT id FROM interests WHERE ((sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)) AND status != 3 LIMIT 1";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param('iiii', $sender_id, $receiver_id, $receiver_id, $sender_id);
         $stmt->execute();
         return $stmt->get_result()->num_rows > 0;
     }
-    public function getreceivedrequest($user_id, $limit = 2, $offset = 0)
+    public function getreceivedrequest($user_id, $limit, $offset = 0)
     {
         $status = 0;
         $sql = "SELECT i.*,u.fullname,p.user_id,p.city,p.profile_photo FROM interests i
@@ -85,24 +84,24 @@ class ConnectRequest extends Model
         return (int) $stmt->get_result()->fetch_assoc()['total'];
     }
 
-    public function getacceptrequest($user_id, $limit = 2, $offset = 0)
+    public function getacceptrequest($user_id, $limit, $offset = 0)
     {
         $status = 1;
         $sql = "SELECT i.*, u.fullname, p.user_id, p.city, p.profile_photo 
             FROM interests i
-            JOIN users u ON i.receiver_id = u.id
+            JOIN users u ON (CASE WHEN i.sender_id = ? THEN i.receiver_id = u.id ELSE i.sender_id = u.id END)
             JOIN profiles p ON p.user_id = u.id
-            WHERE i.sender_id=? AND i.status=?
+            WHERE (i.sender_id=? OR i.receiver_id=?) AND i.status=?
             ORDER BY i.created_at DESC
             LIMIT ? OFFSET ?";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('iiii', $user_id, $status, $limit, $offset);
+        $stmt->bind_param('iiiiii', $user_id, $user_id, $user_id, $status, $limit, $offset);
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getdeclinerequest($user_id, $limit = 2, $offset = 0)
+    public function getdeclinerequest($user_id, $limit , $offset = 0)
     {
         $status = 2;
         $sql = "SELECT i.*, u.fullname, p.user_id, p.city, p.profile_photo 
@@ -121,9 +120,9 @@ class ConnectRequest extends Model
 
     public function countacceptinterest($user_id)
     {
-        $sql = "SELECT COUNT(*) AS total FROM interests WHERE receiver_id=? AND status=1";
+        $sql = "SELECT COUNT(*) AS total FROM interests WHERE (receiver_id=? OR sender_id=?) AND status=1";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('i', $user_id);
+        $stmt->bind_param('ii', $user_id, $user_id);
         $stmt->execute();
         return (int) $stmt->get_result()->fetch_assoc()['total'];
     }
@@ -145,6 +144,9 @@ class ConnectRequest extends Model
     $stmt->bind_param("iiiiii",$sender_id,$receiver_id,$sender_id,$receiver_id,$receiver_id,$sender_id
     );
 
-    return $stmt->execute();
+    if ($stmt->execute()) {
+        return $stmt->affected_rows > 0;
+    }
+    return false;
 }
 }

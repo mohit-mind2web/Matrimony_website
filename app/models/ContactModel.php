@@ -26,4 +26,20 @@ class ContactModel extends Model{
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function getUserQueries($user_id, $limit = 5, $offset = 0) {
+        $sql = "SELECT * FROM queries WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param('iii', $user_id, $limit, $offset);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+    public function countqueries($user_id)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM queries WHERE user_id=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param('i', $user_id);
+        $stmt->execute();
+        return (int) $stmt->get_result()->fetch_assoc()['total'];
+    }
 }

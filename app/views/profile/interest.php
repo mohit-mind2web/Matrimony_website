@@ -30,7 +30,7 @@
                             <div class="action">
                                 <?php if ($receive['status'] == 0): ?>
                                     <a href="/interest/accept?reqid=<?= $receive['id'] ?>" class="accept">Accept</a>
-                                    <a href="interest/reject?reqid=<?= $receive['id'] ?>" class="reject">Decline</a>
+                                    <a href="/interest/reject?reqid=<?= $receive['id'] ?>" class="reject">Decline</a>
                                 <?php elseif ($receive['status'] == 1): ?>
                                     <span class="accept">Accepted</span>
                                     <a href="/user/profileview?id=<?= $receive['user_id']  ?>" class="contact">Contact Now</a>
@@ -121,7 +121,7 @@
          <div id="declined" class="tab-content">
             <div class="container">
                 <?php if (!empty($declineinterest)) { ?>
-                    <?php foreach ($declinetinterest as $decline) { ?>
+                    <?php foreach ($declineinterest as $decline) { ?>
                         <div class="card">
                             <div class="photo">
                                 <img src="/uploads/<?= $decline['profile_photo'] ?? 'default.png' ?>" width="120">

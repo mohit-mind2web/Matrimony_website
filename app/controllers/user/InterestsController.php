@@ -13,22 +13,22 @@ class InterestsController extends Controller
         $user_id = $_SESSION['user_id'];
         $interestModel = new ConnectRequest();
         $totalsent=$interestModel->countsentinterest($user_id);
-        $sentpagination=Pagination::pagination($totalsent,2,'sent_page');
+        $sentpagination=Pagination::pagination($totalsent,8,'sent_page');
         $sentpagination['tab'] = 'sent';
         $sentinterest = $interestModel->getsentrequest($user_id,$sentpagination['limit'],$sentpagination['offset']);
 
         $totalreceive=$interestModel->countreceivedinterest($user_id);
-        $receivepagination=Pagination::pagination($totalreceive,2,'receive_page');
+        $receivepagination=Pagination::pagination($totalreceive,8,'receive_page');
         $receivepagination['tab'] = 'received';
         $receivedinterest = $interestModel->getreceivedrequest($user_id,$receivepagination['limit'],$receivepagination['offset']);
 
         $totalaccept=$interestModel->countacceptinterest($user_id);
-        $acceptpagination=Pagination::pagination($totalaccept,2,'accept_page');
+        $acceptpagination=Pagination::pagination($totalaccept,8,'accept_page');
         $acceptpagination['tab'] = 'accepted';
         $acceptinterest = $interestModel->getacceptrequest($user_id,$acceptpagination['limit'],$acceptpagination['offset']);
 
         $totaldecline=$interestModel->countdeclineinterest($user_id);
-        $declinepagination=Pagination::pagination($totaldecline,2,'decline_page');
+        $declinepagination=Pagination::pagination($totaldecline,8,'decline_page');
         $declinepagination['tab'] = 'declined';
         $declineinterest = $interestModel->getdeclinerequest($user_id,$declinepagination['limit'],$declinepagination['offset']);
 

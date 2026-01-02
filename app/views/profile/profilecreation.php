@@ -1,3 +1,6 @@
+<?php
+include '../app/views/layouts/head.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,12 +22,12 @@
             <p style="color: red;"><?= $error ?></p>
         <?php } ?>
     <?php } ?>
-    <form method="post" action="/user/profilecreate" enctype="multipart/form-data">
+    <form method="post" action="/user/profilecreate/profile" enctype="multipart/form-data">
         <label>Add profile photo</label>
         <input type="file" name="profile_photo">
         <label>Mobile Number</label>
-        <input type="text" name="number" maxlength="10" required>
-        <label for="date">date</label>
+        <input type="text" name="number" maxlength="10" pattern="[6-9]\d{9}" title="Enter valid 10-digit mobile number starting with 6-9" required>
+        <label for="date">Date of Birth</label>
         <input type="date" name="dob" required>
         <label>Gender</label>
         <select name="gender_id" required>

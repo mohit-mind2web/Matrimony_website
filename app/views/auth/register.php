@@ -16,8 +16,10 @@ include '../app/views/layouts/head.php';
         <?php if (!empty($errors)) { ?>
             <?php foreach ($errors as $error) { ?>
                 <p class="error"><?= $error ?></p>
-            <?php } ?>
-        <?php } ?>
+            <?php }?>
+        <?php }  elseif(!empty($success)){?>
+                 <p class="success"><?= $success ?></p>
+                 <?php }?>
         <form method="POST">
             <label>Profile Created for</label>
             <select name="profile_for">
@@ -29,9 +31,9 @@ include '../app/views/layouts/head.php';
             <label>Full Name</label>
             <input type="text" name="fullname" pattern="[A-Za-z\s]{3,50}" title="Only letters and spaces,3-50 characters" required>
             <label>Email</label>
-            <input type="text" name="email" placeholder=" Enter your Email" required>
+            <input type="email" name="email" placeholder=" Enter your Email" required>
             <label>Password</label>
-            <input type="password" name="password" placeholder=" Enter password" pattern=".{6,255}" title="Minimum 6 characters">
+            <input type="password" name="password" placeholder=" Enter password" pattern=".{6,255}" title="Minimum 6 characters" required>
             <p>Already have an account ? <a href="/login">Login here</a></p>
             <button type="submit">Register</button>
         </form>

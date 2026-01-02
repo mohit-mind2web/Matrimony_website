@@ -30,7 +30,7 @@ class ShortlistModel extends Model
       $stmt->bind_param('ii', $user_id, $shortlist_id);
       return $stmt->execute();
    }
-   public function getallshortlists($user_id, $limit=3, $offset = 0)
+   public function getallshortlists($user_id, $limit, $offset = 0)
    {
       $sql = "SELECT p.*,u.fullname,i.status,i.sender_id,i.receiver_id,TIMESTAMPDIFF(YEAR, p.dob, CURDATE()) AS age FROM shortlists s
            JOIN profiles p ON p.user_id=s.shortlist_userid

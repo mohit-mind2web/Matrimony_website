@@ -22,7 +22,7 @@ h3 {
 }
 p[style="color: red;"] {
     color: red;
-    text-align: center;
+    text-align: start;
     font-size: 14px;
 }
 label {

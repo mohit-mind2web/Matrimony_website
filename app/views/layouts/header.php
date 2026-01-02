@@ -10,7 +10,7 @@
 <body>
   <header class="header">
     <div class="logo">
-      <h1>Soul<span>Mates</span></h1>
+      <a href="/user/matches"><h1>Soul<span>Mates</span></h1></a>
     </div>
     <div class="nav">
       <h2>Welcome <?= $_SESSION['fullname']?> !</h2>
@@ -19,7 +19,7 @@
         <nav>
           <?php if($_SESSION['role_id']==2):?>
           <ul>
-            <li><a href="/user/profileview?id=<?= $_SESSION['user_id'] ?>">View Profile</a></li>
+            <li><a href="/user/profileview?id=<?= $_SESSION['user_id'] ?>">Your Profile</a></li>
             <li> <a  href="/user/profileedit">Edit Profile</a></li>
             <li><a href="/user/contactsupport">Get Help</a></li>
             <li><a href="/logout">Logout</a></li>
@@ -46,6 +46,7 @@
         <?php endif; ?>
         <li><a href="/user/interests">Interests Received</a></li>
         <li><a href="/user/shortlists">Shortlists Profiles</a></li>
+         <li><a href="/user/queries">Your queries</a></li>
         <li><a href="/user/contactsupport">Help & Support</a></li>
         <li><a href="/logout">Logout</a></li>
       </ul>
@@ -56,6 +57,7 @@
         <li><a href="/admin/usermanage">Manage Users</a></li>
         <li><a href="/admin/managereports">Manage Reports</a></li>
         <li><a href="/admin/managequeries">Manage Queries</a></li>
+        <li><a href="/admin/activity-logs">Activity Logs</a></li>
         <li><a href="/logout">Logout</a></li>
       </ul>
       <?php endif;?>

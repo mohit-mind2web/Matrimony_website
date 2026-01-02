@@ -74,3 +74,16 @@
     color: #666;
     font-style: italic;
 }
+.recentquery{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.recentquery a {
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    
+
+}
