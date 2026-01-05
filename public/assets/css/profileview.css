@@ -166,4 +166,12 @@ body {
     text-decoration: none;
 
 }
+.message-btn{
+    margin-left: auto;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 8px;
+    color: black
+}
 

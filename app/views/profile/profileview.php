@@ -77,6 +77,9 @@
                         <?= $profileview['is_shortlist'] ? 'Shortlisted' : 'Shortlist' ?>
                     </span>
                 </button>
+                <?php if ($profileview['user_id'] != $_SESSION['user_id']): ?>
+        <a href="/user/messages?id=<?= $profileview['user_id'] ?>" class="message-btn"> Message</a>
+    <?php endif; ?>
             <?php else: ?>
                 <button class="btn connect-btn" onclick="alert('Complete your profile to connect')">Connect</button>
             <?php endif; ?>

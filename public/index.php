@@ -11,6 +11,7 @@ use App\controllers\user\AuthController;
 use App\controllers\user\QueriesStatusController;
 use App\controllers\user\ConnectController;
 use App\controllers\user\ContactController;
+use App\controllers\user\ChatController;
 use App\controllers\user\HomeController;
 use App\controllers\user\InterestsController;
 use App\controllers\user\MatchesController;
@@ -79,5 +80,11 @@ $router->post('/admin/managequeries',[QueriesController::class,'index']);
 
 $router->post('/admin/queries/status',[QueriesController::class,'updatequery']);
 $router->get('/admin/activity-logs',[ActivityLogController::class,'index']);
+//chat
+// chat message
+$router->get('/user/messages', [ChatController::class, 'chat']);
+$router->post('/user/messages/send', [ChatController::class, 'send']);
+//chatinbox
+$router->get('/user/chatinbox', [ChatController::class, 'chatinbox']);
 
 $router->dispatch();

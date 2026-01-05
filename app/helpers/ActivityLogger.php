@@ -1,13 +1,13 @@
 <?php
-
 namespace App\helpers;
-
 use App\core\Database;
+use App\core\Model;
+use App\models\admin\ActivityLog;
 
-class ActivityLogger {
+
+class ActivityLogger extends Model {
     
     public static function log($activityType, $description, $userId = null, $userRole = null) {
-        $conn = Database::connect();
         
         // Attempt to get user info from session if not provided
         if ($userId === null && isset($_SESSION['user_id'])) {
@@ -21,13 +21,14 @@ class ActivityLogger {
         // Get IP and User Agent
         $ipAddress = $_SERVER['REMOTE_ADDR'] ?? null;
         $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? null;
-
-        $stmt = $conn->prepare("INSERT INTO activity_logs (user_id, user_role, activity_type, description, ip_address, user_agent) VALUES (?, ?, ?, ?, ?, ?)");
-        
-        if ($stmt) {
-            $stmt->bind_param("isssss", $userId, $userRole, $activityType, $description, $ipAddress, $userAgent);
-            $stmt->execute();
-            $stmt->close();
-        }
+$log = new ActivityLog();
+        $log->create(
+            $userId,
+            $userRole,
+            $activityType,
+            $description,
+            $ipAddress,
+            $userAgent
+        );
     }
 }
