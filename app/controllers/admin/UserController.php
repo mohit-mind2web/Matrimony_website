@@ -8,6 +8,7 @@ use App\models\admin\UserModel;
 
 class UserController extends Controller
 {
+    //user manage page
     public function index()
     {
         Auth::requireRole([1]);
@@ -30,6 +31,27 @@ class UserController extends Controller
             'userstatus' => '',
         ];
         $userModel = new UserModel();
+
+        if (isset($_POST['export']) && $_POST['export'] == 1) {
+            $userdetails = $userModel->getallusers($filters, 100000, 0);
+            header('Content-Type: text/csv');
+            header('Content-Disposition: attachment; filename="users.csv"');
+            $output = fopen('php://output', 'w');
+            fputcsv($output, ['User Id', 'Full Name', 'Email', 'Profile Status', 'Status', 'Joined At']);
+            foreach ($userdetails as $user) {
+                fputcsv($output, [
+                    $user['id'],
+                    $user['fullname'],
+                    $user['email'],
+                    $user['profile_complete'] ? 'Completed' : 'Incomplete',
+                    $user['status'] == 1 ? 'Active' : 'Blocked',
+                    date('d M Y', strtotime($user['created_at']))
+                ]);
+            }
+            fclose($output);
+            exit;
+        }
+
         $total = $userModel->getcountusers($filters);
         $pagination = Pagination::pagination($total, 10);
         $userdetails = $userModel->getallusers($filters, $pagination['limit'], $pagination['offset']);
@@ -40,6 +62,7 @@ class UserController extends Controller
         ]);
     }
 
+    //update status 
     public function toggle()
     {
         $user_id = $_POST['user_id'];

@@ -27,13 +27,13 @@
     <label>Mobile Number</label>
     <input type="text" name="number" maxlength="10" pattern="[6-9]\d{9}" title="Enter valid 10-digit mobile number starting with 6-9" value="<?= $profile['mobileno']  ?>" required>
 
-    <label>Date of Birth</label>
-    <input type="date" name="dob" value="<?= $profile['dob'] ?>" required>
+    <label>Date of Birth (Format: M / D / Y)</label>
+    <input type="date" name="dob" value="<?= $profile['dob'] ?>"  min="1900-01-01"  max="<?php echo date('Y-m-d'); ?>" required>
 
     <label>Gender</label>
     <select name="gender_id" required>
         <?php foreach ($genders as $id => $name): ?>
-            <option value="<?= $id ?>" <?= $profile['gender'] ?? '' == $id ? 'selected' : '' ?>>
+            <option value="<?= $id ?>" <?= ($profile['gender'] ?? '') == $id ? 'selected' : '' ?>>
                 <?= $name ?>
             </option>
         <?php endforeach; ?>
@@ -42,7 +42,7 @@
     <label>Religion</label>
     <select name="religion_id" required>
         <?php foreach ($religions as $id => $name): ?>
-            <option value="<?= $id ?>" <?= $profile['religion_id'] ?? '' == $id ? 'selected' : '' ?>>
+            <option value="<?= $id ?>" <?= ($profile['religion_id'] ?? '') == $id ? 'selected' : '' ?>>
                 <?= $name ?>
             </option>
         <?php endforeach; ?>
@@ -51,7 +51,7 @@
     <label>Height</label>
     <select name="height_id" required>
         <?php foreach ($heights as $id => $name): ?>
-            <option value="<?= $id ?>" <?= $profile['height_id'] ?? '' == $id ? 'selected' : '' ?>>
+            <option value="<?= $id ?>" <?= ($profile['height_id'] ?? '') == $id ? 'selected' : '' ?>>
                 <?= $name ?>
             </option>
         <?php endforeach; ?>
@@ -60,7 +60,7 @@
     <label>Education</label>
     <select name="education_id" required>
         <?php foreach ($educations as $id => $name): ?>
-            <option value="<?= $id ?>" <?= $profile['education_id'] ?? ''== $id ? 'selected' : '' ?>>
+            <option value="<?= $id ?>" <?= ($profile['education_id'] ?? '') == $id ? 'selected' : '' ?>>
                 <?= $name ?>
             </option>
         <?php endforeach; ?>
@@ -69,7 +69,7 @@
     <label>Profession</label>
     <select name="profession_id" required>
         <?php foreach ($professions as $id => $name): ?>
-            <option value="<?= $id ?>" <?= $profile['profession_id'] ?? '' == $id ? 'selected' : '' ?>>
+            <option value="<?= $id ?>" <?= ($profile['profession_id'] ?? '') == $id ? 'selected' : '' ?>>
                 <?= $name ?>
             </option>
         <?php endforeach; ?>

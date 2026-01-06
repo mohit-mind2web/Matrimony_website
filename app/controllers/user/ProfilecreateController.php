@@ -37,159 +37,163 @@ class ProfilecreateController extends Controller
     //function to save profile details to profiles databse
     public function profile()
     {
-        try{
-        Auth::requireRole([2]);
-        $constants = require APPROOT . '/config/constants.php';
+        try {
+            Auth::requireRole([2]);
+            $constants = require APPROOT . '/config/constants.php';
 
-        $allowedReligions   = array_keys($constants['religions']);
-        $allowedEducations  = array_keys($constants['educations']);
-        $allowedProfessions = array_keys($constants['professions']);
-        $user_id = $_SESSION['user_id'];
-        $profileModel = new Profile();
-        $mobile     = $_POST['number'];
-        $dob        = $_POST['dob'];
-        $gender = $_POST['gender_id'];
-        $religion   = $_POST['religion_id'];
-        $height     = $_POST['height_id'];
-        $education  = $_POST['education_id'];
-        $profession = $_POST['profession_id'];
-        $city       = $_POST['city'];
-        $aboutme    = $_POST['about_me'];
-        $photoName = null;
+            $allowedReligions   = array_keys($constants['religions']);
+            $allowedEducations  = array_keys($constants['educations']);
+            $allowedProfessions = array_keys($constants['professions']);
+            $user_id = $_SESSION['user_id'];
+            $profileModel = new Profile();
+            $mobile     = $_POST['number'];
+            $dob        = $_POST['dob'];
+            $gender = $_POST['gender_id'];
+            $religion   = $_POST['religion_id'];
+            $height     = $_POST['height_id'];
+            $education  = $_POST['education_id'];
+            $profession = $_POST['profession_id'];
+            $city       = $_POST['city'];
+            $aboutme    = $_POST['about_me'];
+            $photoName = null;
 
-        $errors = [];
-        if ($mobile === '') {
-            $errors['number'] = 'Mobile number is required';
-        } elseif (!preg_match('/^[6-9]\d{9}$/', $mobile)) {
-            $errors['number'] = 'Enter valid 10-digit mobile number';
-        }
+            $errors = [];
+            if ($mobile === '') {
+                $errors['number'] = 'Mobile number is required';
+            } elseif (!preg_match('/^[6-9]\d{9}$/', $mobile)) {
+                $errors['number'] = 'Enter valid 10-digit mobile number';
+            }
 
 
-        if (empty($_POST['dob'])) {
-            $errors['dob'] = 'Date of birth is required';
-        } else {
-            $dobDate = \DateTime::createFromFormat('Y-m-d', $_POST['dob']);
-            $errorsDate = \DateTime::getLastErrors();
-
-            if (!$dobDate  ) {
-                $errors['dob'] = 'Invalid date format';
+            if (empty($_POST['dob'])) {
+                $errors['dob'] = 'Date of birth is required';
             } else {
-                $today = new \DateTime();
+                $dobDate = \DateTime::createFromFormat('Y-m-d', $_POST['dob']);
+                $errorsDate = \DateTime::getLastErrors();
 
-                if ($dobDate > $today) {
-                    $errors['dob'] = 'Date of birth cannot be in the future';
+                if (!$dobDate || ($errorsDate !== false && ($errorsDate['warning_count'] > 0 || $errorsDate['error_count'] > 0))) {
+                    $errors['dob'] = 'Invalid date format';
                 } else {
-                    $age = $today->diff($dobDate)->y;
-                    if ($age < 18) {
-                        $errors['dob'] = 'Age must be 18 or above';
+                    // Year check
+                    $year = (int)$dobDate->format('Y');
+                    if ($year < 1900 || $year > (int)date('Y')) {
+                        $errors['dob'] = 'Invalid year';
                     } else {
-                        $dob = $dobDate->format('Y-m-d');
+                        $today = new \DateTime();
+
+                        if ($dobDate > $today) {
+                            $errors['dob'] = 'Date of birth cannot be in the future';
+                        } else {
+                            $age = $today->diff($dobDate)->y;
+                            if ($age < 18) {
+                                $errors['dob'] = 'Age must be 18 or above';
+                            } else {
+                                $dob = $dobDate->format('Y-m-d');
+                            }
+                        }
                     }
                 }
             }
-        }
 
-        if ($gender === '') {
-            $errors['gender'] = 'Gender is required';
-        } elseif (!array_key_exists($gender, $constants['genders'])) {
-            $errors['gender'] = 'Invalid gender selected';
-        }
-
-        if ($religion === '') {
-            $errors['religion'] = 'Religion is required';
-        } elseif (!in_array((int)$religion, $allowedReligions, true)) {
-            $errors['religion'] = 'Invalid religion selected';
-        }
-
-        if ($education === '') {
-            $errors['education'] = 'Education is required';
-        } elseif (!in_array((int)$education, $allowedEducations, true)) {
-            $errors['education'] = 'Invalid education selected';
-        }
-
-        if ($profession === '') {
-            $errors['profession'] = 'Profession is required';
-        } elseif (!in_array((int)$profession, $allowedProfessions, true)) {
-            $errors['profession'] = 'Invalid profession selected';
-        }
-
-        if ($height === '') {
-            $errors['height'] = 'Height is required';
-        } elseif (!array_key_exists($height, $constants['heights'])) {
-            $errors['height'] = 'Invalid height selected';
-        }
-
-        if ($city === '') {
-            $errors['city'] = 'City is required';
-        } elseif (!preg_match('/^[a-zA-Z\s.-]{3,50}$/', $city)) {
-            $errors['city'] = 'City should contain only letters';
-        }
-
-
-        if ($aboutme !== '' && strlen($aboutme) > 250) {
-            $errors['about_me'] = 'About Me should not exceed 250 characters';
-        }
-
-        if (!empty($_FILES['profile_photo']['name'])) {
-
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-            $allowedExtensions = ['jpg', 'jpeg', 'png'];
-            $fileType = $_FILES['profile_photo']['type'];
-            $fileSize = $_FILES['profile_photo']['size'];
-            $fileExtension = strtolower(pathinfo($_FILES['profile_photo']['name'], PATHINFO_EXTENSION));
-
-            if (!in_array($fileType, $allowedTypes) || !in_array($fileExtension, $allowedExtensions)) {
-                $errors['profile_photo'] = 'Only JPG and PNG images allowed';
+            if ($gender === '') {
+                $errors['gender'] = 'Gender is required';
+            } elseif (!array_key_exists($gender, $constants['genders'])) {
+                $errors['gender'] = 'Invalid gender selected';
             }
 
-            if ($fileSize > 2 * 1024 * 1024) {
-                $errors['profile_photo'] = 'Image size must be less than 2MB';
+            if ($religion === '') {
+                $errors['religion'] = 'Religion is required';
+            } elseif (!in_array((int)$religion, $allowedReligions, true)) {
+                $errors['religion'] = 'Invalid religion selected';
             }
-        }
-        if (!empty($errors)) {
-            $this->render('profile/profilecreation', $this->getdata(['errors' => $errors]));
-            return;
-        }
 
-        if (!empty($_FILES['profile_photo']['name'])) {
-            $photoName = time() . '_' . $_FILES['profile_photo']['name'];
-            move_uploaded_file(
-                $_FILES['profile_photo']['tmp_name'],
-                APPROOT . '/../public/uploads/' . $photoName
-            );
-        }
+            if ($education === '') {
+                $errors['education'] = 'Education is required';
+            } elseif (!in_array((int)$education, $allowedEducations, true)) {
+                $errors['education'] = 'Invalid education selected';
+            }
 
-        $data = [
-            'user_id'      => $user_id,
-            'profile_photo' => $photoName,
-            'mobileno'     => $mobile,
-            'dob'          => $dob,
-            'gender' => (int)$gender,
-            'religion_id'  => (int)$religion,
-            'height_id'    => $height,
-            'education_id' => (int)$education,
-            'profession_id' => (int)$profession,
-            'city'         => $city,
-            'about_me'     => $aboutme
-        ];
+            if ($profession === '') {
+                $errors['profession'] = 'Profession is required';
+            } elseif (!in_array((int)$profession, $allowedProfessions, true)) {
+                $errors['profession'] = 'Invalid profession selected';
+            }
+
+            if ($height === '') {
+                $errors['height'] = 'Height is required';
+            } elseif (!array_key_exists($height, $constants['heights'])) {
+                $errors['height'] = 'Invalid height selected';
+            }
+
+            if ($city === '') {
+                $errors['city'] = 'City is required';
+            } elseif (!preg_match('/^[a-zA-Z\s.-]{3,50}$/', $city)) {
+                $errors['city'] = 'City should contain only letters';
+            }
 
 
-        if ($profileModel->saveprofile($data)) {
-            $profileModel->markProfileCompleted($user_id);
-            $_SESSION['profile_complete'] = 1;
-            
-            // Log Profile Creation
-            ActivityLogger::log('PROFILE_CREATE', "User profile created", $user_id, 2);
+            if ($aboutme !== '' && strlen($aboutme) > 250) {
+                $errors['about_me'] = 'About Me should not exceed 250 characters';
+            }
 
-            header("Location: /user/matches");
-            exit;
-        }
-        }
+            if (!empty($_FILES['profile_photo']['name'])) {
 
-        Catch(\Exception $e)
-        {
-          echo"<pre>";
-        print_r($e->getMessage());die;
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+                $allowedExtensions = ['jpg', 'jpeg', 'png'];
+                $fileType = $_FILES['profile_photo']['type'];
+                $fileSize = $_FILES['profile_photo']['size'];
+                $fileExtension = strtolower(pathinfo($_FILES['profile_photo']['name'], PATHINFO_EXTENSION));
+
+                if (!in_array($fileType, $allowedTypes) || !in_array($fileExtension, $allowedExtensions)) {
+                    $errors['profile_photo'] = 'Only JPG and PNG images allowed';
+                }
+
+                if ($fileSize > 2 * 1024 * 1024) {
+                    $errors['profile_photo'] = 'Image size must be less than 2MB';
+                }
+            }
+            if (!empty($errors)) {
+                $this->render('profile/profilecreation', $this->getdata(['errors' => $errors]));
+                return;
+            }
+
+            if (!empty($_FILES['profile_photo']['name'])) {
+                $photoName = time() . '_' . $_FILES['profile_photo']['name'];
+                move_uploaded_file(
+                    $_FILES['profile_photo']['tmp_name'],
+                    APPROOT . '/../public/uploads/' . $photoName
+                );
+            }
+
+            $data = [
+                'user_id'      => $user_id,
+                'profile_photo' => $photoName,
+                'mobileno'     => $mobile,
+                'dob'          => $dob,
+                'gender' => (int)$gender,
+                'religion_id'  => (int)$religion,
+                'height_id'    => $height,
+                'education_id' => (int)$education,
+                'profession_id' => (int)$profession,
+                'city'         => $city,
+                'about_me'     => $aboutme
+            ];
+
+
+            if ($profileModel->saveprofile($data)) {
+                $profileModel->markProfileCompleted($user_id);
+                $_SESSION['profile_complete'] = 1;
+
+                // Log Profile Creation
+                ActivityLogger::log('PROFILE_CREATE', "User profile created", $user_id, 2);
+
+                header("Location: /user/matches");
+                exit;
+            }
+        } catch (\Exception $e) {
+            echo "<pre>";
+            print_r($e->getMessage());
+            die;
         }
     }
     public function edit()
@@ -236,28 +240,33 @@ class ProfilecreateController extends Controller
         }
 
         if (empty($_POST['dob'])) {
-            $errors['dob'] = 'Date of birth is required';
-        } else {
-            $dobDate = \DateTime::createFromFormat('Y-m-d', $_POST['dob']);
-            $errorsDate = \DateTime::getLastErrors();
-
-            if (!$dobDate || ($errorsDate !== false && ($errorsDate['warning_count'] > 0 || $errorsDate['error_count'] > 0))) {
-                $errors['dob'] = 'Invalid date format';
+                $errors['dob'] = 'Date of birth is required';
             } else {
-                $today = new \DateTime();
+                $dobDate = \DateTime::createFromFormat('Y-m-d', $_POST['dob']);
+                $errorsDate = \DateTime::getLastErrors();
 
-                if ($dobDate > $today) {
-                    $errors['dob'] = 'Date of birth cannot be in the future';
+                if (!$dobDate || ($errorsDate !== false && ($errorsDate['warning_count'] > 0 || $errorsDate['error_count'] > 0))) {
+                    $errors['dob'] = 'Invalid date format';
                 } else {
-                    $age = $today->diff($dobDate)->y;
-                    if ($age < 18) {
-                        $errors['dob'] = 'Age must be 18 or above';
+                    $year = (int)$dobDate->format('Y');
+                    if ($year < 1900 || $year > (int)date('Y')) {
+                        $errors['dob'] = 'Invalid year';
                     } else {
-                        $dob = $dobDate->format('Y-m-d');
+                        $today = new \DateTime();
+
+                        if ($dobDate > $today) {
+                            $errors['dob'] = 'Date of birth cannot be in the future';
+                        } else {
+                            $age = $today->diff($dobDate)->y;
+                            if ($age < 18) {
+                                $errors['dob'] = 'Age must be 18 or above';
+                            } else {
+                                $dob = $dobDate->format('Y-m-d');
+                            }
+                        }
                     }
                 }
             }
-        }
 
         if ($gender === '') {
             $errors['gender'] = 'Gender is required';

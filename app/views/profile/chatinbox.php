@@ -13,6 +13,9 @@
                         <img src="/uploads/<?= $friend['profile_photo'] ?? 'default.png' ?>" width="120">
                         <div class="name">
                         <h4><?= htmlspecialchars($friend['fullname']) ?></h4>
+                        <?php if ($friend['unread_count'] > 0) { ?>
+                            <span class="unread-count"><?= $friend['unread_count'] ?> New Messages</span>
+                        <?php } ?>
                         </div>
                     </div>
                     <div class="action">

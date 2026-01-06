@@ -88,6 +88,7 @@ $religions = $constants['religions'] ?? [];
             </div>
         <?php } ?>
 
+        <!--profile containr -->
         <div class="profiles" id="profilesContainer">
             <?php if (!empty($profiles)) { ?>
                 <?php foreach ($profiles as $profile) { ?>
@@ -137,10 +138,14 @@ $religions = $constants['religions'] ?? [];
             <?php } else { ?>
                 <p>No matching record Found</p>
             <?php } ?>
-
+            <div class="page">
+            <?php include __DIR__ . '/../layouts/pagination.php'; ?>
+            </div>
         </div>
 
-        <!-- Custom Modal for Incomplete Profile -->
+
+
+        <!-- incomplete model -->
         <div id="completeProfileModal" class="modal-overlay" style="display: none;">
             <div class="modal-content-box">
                 <span class="close-modal">&times;</span>
@@ -162,8 +167,5 @@ $religions = $constants['religions'] ?? [];
                 <button id="declinecookies"> Decline</button>
             </div>
         </div>
-        <?php if (empty($_POST)): ?>
-            <?php include __DIR__ . '/../layouts/pagination.php'; ?>
-        <?php endif; ?>
     </section>
 </main>

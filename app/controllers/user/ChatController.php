@@ -16,15 +16,20 @@ class ChatController extends Controller
 
         $senderId = $_SESSION['user_id'];
         $messageModel = new ChatModel();
+
+        if (!$messageModel->isconnected($senderId, $receiverId)) {
+            header("Location: /user/chatinbox");
+            exit;
+        }
         $messages = $messageModel->getChat($senderId, $receiverId);
-  $receivername=$messageModel->getUserById($receiverId);
+        $receivername = $messageModel->getUserById($receiverId);
         // Mark as read
         $messageModel->markAsRead($receiverId, $senderId);
 
         $this->view('profile/chat', [
             'messages'   => $messages,
             'receiverId' => $receiverId,
-            'receivername' =>$receivername
+            'receivername' => $receivername
         ]);
     }
 
@@ -51,14 +56,16 @@ class ChatController extends Controller
         }
     }
 
-    public function chatinbox(){
-         Auth::requireRole([2]);
-         $userId=$_SESSION['user_id'];
-        $connectionModel=new ChatModel();
-        $friends=$connectionModel->getconnections($userId);
-        $this->view('profile/chatinbox',[
-            'friends'=>$friends
-        ]);
 
+    //chatinbox function
+    public function chatinbox()
+    {
+        Auth::requireRole([2]);
+        $userId = $_SESSION['user_id'];
+        $connectionModel = new ChatModel();
+        $friends = $connectionModel->getconnections($userId);
+        $this->view('profile/chatinbox', [
+            'friends' => $friends
+        ]);
     }
 }

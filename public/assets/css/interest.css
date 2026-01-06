@@ -143,3 +143,14 @@
     color: black;
     background: #dedede;
 }
+
+.unread-count {
+    display: inline-block;
+    background-color: #ff3b30;
+    color: white;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-top: 5px;
+    font-weight: bold;
+}

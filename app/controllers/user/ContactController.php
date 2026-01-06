@@ -8,6 +8,8 @@ use App\models\UserModel;
 
 class ContactController extends Controller
 {
+
+    //contact function
     public function index()
     {
         $user_id = $_SESSION['user_id'];

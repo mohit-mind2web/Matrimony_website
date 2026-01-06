@@ -13,7 +13,7 @@
         <div class="filter">
             <form method="post" action="/admin/usermanage" id="filterform">
                 <input type="text" name="name" placeholder="Enter name"
-                value="<?= htmlspecialchars($filters['name'] ?? '') ?>" onkeyup="autoSubmit()">
+                value="<?= htmlspecialchars($filters['name'] ?? '') ?>" onkeyup="autoSubmit('filterform')">
                 <select name="profilestatus" onchange="this.form.submit()">
                     <option value="">All Profiles</option>
                     <option value="1" <?= ($filters['profilestatus'] ?? '') === '1' ? 'selected' : '' ?>>Completed Profiles</option>
@@ -27,6 +27,7 @@
                     <option value="0" <?= ($filters['userstatus'] ?? '') === '0' ? 'selected' : '' ?>>Blocked</option>
                 </select>
                  <button type="submit" class="reset" name="reset_filters" value=1>reset</button>
+                 <button type="submit" class="export" name="export" value="1">Export CSV</button>
             </form>
         </div>
         <table class="usermanage">

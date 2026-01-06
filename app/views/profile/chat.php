@@ -54,8 +54,6 @@
             </form>
 
         </div>
-        <section>
-            <main>
                 <script>
                     const chatBox = document.querySelector('.chat-messages');
                     chatBox.scrollTop = chatBox.scrollHeight;

@@ -56,11 +56,13 @@
    background-color: #ef4b4b;
     color: white;
     cursor: pointer;
+    border-radius: 8px;
  }
  input{
     padding: 8px 10px;
     border: 1px solid #ddd;
-    width: 712px;
+    width: 720px;
+    border-radius: 8px;
  }
  .chatinbox{
   display: flex;

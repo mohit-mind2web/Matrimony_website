@@ -5,6 +5,8 @@ use App\core\Controller;
 use App\models\admin\DashboardModel;
 use App\models\ContactModel;
 class DashboardController extends Controller{
+
+    //dashboard page
     public function index(){
         Auth::requireRole([1]);
         $dashboardModel =new DashboardModel();

@@ -149,6 +149,6 @@ header .nav i{
   border-radius: 4px;
   transition: color 0.3s ease;
 }
-.sidebar ul li a:hover { 
+.sidebar ul li a:hover, .sidebar ul li a.active { 
     background: rgb(243, 243, 243);
 }

@@ -49,7 +49,7 @@ class MatchesController extends Controller
 
         $user_id = $_SESSION['user_id'];
         $page = $filters['page'] ?? 1;
-        $limit = 3;
+        $limit = 6;
         $offset = ($page - 1) * $limit;
         $profileModel = new UserMatches();
         $total = $profileModel->countFilteredProfiles($user_id, $filters);

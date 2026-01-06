@@ -27,8 +27,8 @@ include '../app/views/layouts/head.php';
         <input type="file" name="profile_photo">
         <label>Mobile Number</label>
         <input type="text" name="number" maxlength="10" pattern="[6-9]\d{9}" title="Enter valid 10-digit mobile number starting with 6-9" required>
-        <label for="date">Date of Birth</label>
-        <input type="date" name="dob" required>
+        <label for="date">Date of Birth (Format:M/D/Y)</label>
+        <input type="date" name="dob" min="1900-01-01" max="<?php echo date('Y-m-d'); ?>"  required>
         <label>Gender</label>
         <select name="gender_id" required>
             <option value="">Select Gender</option>

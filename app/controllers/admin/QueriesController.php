@@ -8,6 +8,7 @@ use App\models\admin\QueriesModel;
 
 class QueriesController extends Controller
 {
+    //queries manage page
     public function index()
     {
         Auth::requireRole([1]);
@@ -39,6 +40,7 @@ class QueriesController extends Controller
         ]);
     }
 
+    //update query status
     public function updatequery()
     {
         $queryid = (int)$_POST['query_id'];

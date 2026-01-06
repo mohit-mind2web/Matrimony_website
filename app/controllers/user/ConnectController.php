@@ -6,6 +6,7 @@ use App\models\ConnectRequest;
 use App\models\UserMatches;
 
 class ConnectController extends Controller{
+    //sending connect request function
     public function send(){
     $sender_id = $_SESSION['user_id'];
     $receiver_id = $_POST['receiver_id'];
@@ -27,6 +28,7 @@ class ConnectController extends Controller{
     exit();
 }
 
+//get matches profile function
    public function matches() {
     $user_id = $_SESSION['user_id'];
     $userMatchesModel = new UserMatches();
@@ -37,6 +39,7 @@ class ConnectController extends Controller{
         'religions' => $this->constants['religions'] ?? []
     ]);
 }
+//disconnect function
  public function disconnect()
 {
     Auth::checkLogin();

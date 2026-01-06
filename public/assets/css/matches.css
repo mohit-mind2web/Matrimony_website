@@ -48,6 +48,11 @@
     margin-top: 30px;
 }
 
+.page {
+    grid-column: 1 / -1;
+    width: 100%;
+}
+
 .card {
     position:relative;
     background-color: #fff;
@@ -270,3 +275,4 @@ form input,select{
 .btn-modal:hover {
     background: #ff6b81;
 }
+

@@ -1,67 +1,143 @@
-h2{
-    color: rgb(52 73 94);
+h2 {
+  color: rgb(52 73 94);
 }
 .usermanage {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
-.usermanage th, 
+.usermanage th,
 .usermanage td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: center;
-    max-width: 300px;
-    word-break: break-all;
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+  max-width: 300px;
+  word-break: break-all;
 }
 .usermanage th {
-    background: #1a2633;
-    color: white;
+  background: #1a2633;
+  color: white;
 }
-button{
-    background-color: #ef4b4b;
-    color: #fff;
-    font-size: 15px;
-    text-decoration: none;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 6px;
-    margin-top: 10px;
-    transition: background 0.3s;
-    cursor: pointer;
+button {
+  background-color: #ef4b4b;
+  color: #fff;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px;
+  transition: background 0.3s;
+  cursor: pointer;
 }
-td .green{
-    background-color: green;
-    padding: 5px 10px;
-    color: white;
-    border-radius: 8px;
+td .green {
+  background-color: green;
+  padding: 5px 10px;
+  color: white;
+  border-radius: 8px;
 }
-td .red{
-    background-color: #ef4b4b;
-    padding: 5px 10px;
-    color: white;
-    border-radius: 8px;
-}
-
-.filter form{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-.filter form input{
-    width: 300px;
-}
-.filter form input,select{
-    padding: 8px 16px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    background: transparent;
-        color: #656363;
-}
-form .reset{
-    width: 100px;
-    border-radius: 8px;
-    font-size: 16px;
-    margin-top: 0px;
+td .red {
+  background-color: #ef4b4b;
+  padding: 5px 10px;
+  color: white;
+  border-radius: 8px;
 }
 
+.filter form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.filter form input {
+  width: 300px;
+}
+.filter form input,
+select {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: transparent;
+  color: #656363;
+}
+form .reset {
+  width: 105px;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-top: 0px;
+}
+form .export {
+  width: 105px;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-left: auto;
+  margin-top: 0px;
+  background-color: #28a745;
+}
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+.bg-primary {
+  background-color: #007bff;
+}
+.bg-secondary {
+  background-color: #6c757d;
+}
+.bg-success {
+  background-color: #28a745;
+}
+.bg-danger {
+  background-color: #dc3545;
+}
+.bg-warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+.bg-info {
+  background-color: #17a2b8;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.35em 0.65em;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
+
+.form-select {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  appearance: none;
+}
+.form-select-sm {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  font-size: 0.875rem;
+}

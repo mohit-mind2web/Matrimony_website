@@ -71,6 +71,7 @@ $(document).ready(function () {
         });
     });
 
+
     $(document).on('click', '.page-link', function (e) {
         e.preventDefault();
         let page = $(this).data('page');
@@ -88,11 +89,8 @@ $(document).ready(function () {
         });
     });
     $(document).on('click', '.pagination a', function (e) {
-
         if (!filterActive) return;
-
         e.preventDefault();
-
         let page = new URL($(this).attr('href'), window.location.origin)
             .searchParams.get('page');
 

@@ -4,11 +4,8 @@
                         <div class="shortlist-icon" data-profile-id="<?= $profile['user_id'] ?>">
                             <i class="<?= !empty($profile['is_shortlist']) ? 'fa-solid' : 'fa-regular' ?> fa-star"></i>
                         </div>
-
                         <img src="/uploads/<?= $profile['profile_photo'] ?? 'default.png' ?>" width="120">
-
                         <h4><?= htmlspecialchars($profile['fullname']) ?></h4>
-
                         <p class="meta">
                             <?= $profile['age'] ?> yrs |
                             <?= $heights[$profile['height_id']] ?? 'Height N/A' ?> |
@@ -44,4 +41,5 @@
             <?php } else { ?>
                 <p>No matching record Found</p>
             <?php } ?>
+            
            

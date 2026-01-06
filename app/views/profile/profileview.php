@@ -2,10 +2,10 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/css/profileview.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/assets/js/connect.js"></script>
+
     <title>Profile View</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 
@@ -58,7 +58,7 @@
               <?php if($profileview['user_id']!=$_SESSION['user_id']) :?>
             <?php if ($_SESSION['profile_complete'] == 1): ?>
                 <?php if ($profileview['status'] === null): ?>
-                    <button class="connect-btn" data-receiver-id="<?= $profileview['user_id'] ?>">Connect</button>
+                      <button class="connect-btn" data-receiver-id="<?= $profileview['user_id'] ?>">Connect</button>
                 <?php elseif ($profileview['status'] === 0 && $profileview['sender_id'] == $_SESSION['user_id']): ?>
                     <button class="btnd disabled" disabled>Interest Sent</button>
                 <?php elseif ($profileview['status'] === 0 && $profileview['receiver_id'] == $_SESSION['user_id']): ?>
@@ -69,7 +69,7 @@
                                     <button class="disconnect" type="submit" >Disconnect</button>
                                 </form>
                 <?php elseif ($profileview['status'] === 2): ?>
-                    <button class="btnd disabled" disabled>Request Rejected</button>
+                    <button class="btnd disabled" disabled>Interest Rejected</button>
                 <?php endif; ?>
                 <button type="button" class="shortlist-icon" data-profile-id="<?= $profileview['user_id'] ?>">
                     <i class="<?= $profileview['is_shortlist'] ? 'fa-solid' : 'fa-regular' ?> fa-star"></i>
@@ -77,7 +77,7 @@
                         <?= $profileview['is_shortlist'] ? 'Shortlisted' : 'Shortlist' ?>
                     </span>
                 </button>
-                <?php if ($profileview['user_id'] != $_SESSION['user_id']): ?>
+                <?php if ($profileview['status'] == 1 &&( $profileview['sender_id'] == $_SESSION['user_id'] || $profileview['receiver_id'] == $_SESSION['user_id'])): ?>
         <a href="/user/messages?id=<?= $profileview['user_id'] ?>" class="message-btn"> Message</a>
     <?php endif; ?>
             <?php else: ?>
@@ -157,5 +157,6 @@
 
     </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/connect.js"></script>
 
 </main>

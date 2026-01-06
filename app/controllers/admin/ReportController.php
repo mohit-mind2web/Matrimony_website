@@ -8,6 +8,7 @@ use App\models\admin\ReportModel;
 
 class ReportController extends Controller
 {
+    //report manage page
     public function index()
     {
         Auth::requireRole([1]);
@@ -37,6 +38,8 @@ class ReportController extends Controller
             'filters' => $filters
         ]);
     }
+
+    //update report status
     public function updateStatus()
     {
         $reportId = $_POST['report_id'];

@@ -14,6 +14,7 @@ class AuthController extends Controller
     {
         $this->render('auth/register');
     }
+    //register page logic
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -67,7 +68,6 @@ class AuthController extends Controller
              if($user){
                  ActivityLogger::log('REGISTER', "User registered with email: $email", $user['id'], 2);
              } else {
-                 // Fallback if fetch fails, though unlikely
                   ActivityLogger::log('REGISTER', "User registered with email: $email (ID fetch failed)");
              }
             $success = 'Registration successful! <a href="/login">Login Now</a>.';
