@@ -11,7 +11,7 @@
             <h3>My Queries Status</h3>
             
             <div class="filter-section" style="margin-bottom: 20px;">
-                <form method="post" action="/user/queriesstatus" class="ajax-filter-form" data-target="queries-status-container">
+                <form method="post" action="/user/queries" class="ajax-filter-form" data-target="queries-status-container">
                     <select name="status" style="padding: 8px; border-radius: 4px; border: 1px solid #ddd;">
                         <option value="">All Status</option>
                         <option value="0" <?= ($filters['status'] ?? '') === '0' ? 'selected' : '' ?>>Pending</option>

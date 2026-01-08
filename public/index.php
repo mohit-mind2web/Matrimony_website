@@ -73,6 +73,7 @@ $router->post('/user/contactsupport',[ContactController::class,'index']);
 
 //user queries status
 $router->get('/user/queries',[QueriesStatusController::class,'index']);
+$router->post('/user/queries',[QueriesStatusController::class,'index']);
 
 //admin manage queries route
 $router->get('/admin/managequeries',[QueriesController::class,'index']);
