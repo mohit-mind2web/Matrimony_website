@@ -42,9 +42,9 @@
             </tr>
 
             <?php if (!empty($userdetails)): ?>
-                <?php foreach ($userdetails as $user) { ?>
+                <?php foreach ($userdetails as $key => $user) { ?>
                     <tr>
-                        <td><?= htmlspecialchars($user['id']) ?></td>
+                        <td><?= $key+1 ?></td>
                         <td><?= htmlspecialchars($user['fullname']) ?></td>
                         <td><?= htmlspecialchars($user['email']) ?></td>
                         <td><?= $user['profile_complete'] ?

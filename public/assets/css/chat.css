@@ -35,7 +35,7 @@
  }
 
  .message.sent {
-     background: rgb(75, 196, 75);
+   background: rgb(39 143 39);
      color: #fff;
      margin-left: auto;
  }
@@ -70,9 +70,13 @@
     margin-left: auto;
  }
  .chatinbox a{
-     background-color: #dbdbdb;
+     background-color: #f7f7f7;
     color: black;
-    padding: 5px 10px;
+    padding: 8px 16px;
     border-radius: 8px;
     text-decoration: none;
+ }
+ .chatinbox a:hover{
+    background-color: #ebebeb;
+
  }

@@ -1,3 +1,7 @@
+
+<?php
+include '../app/views/layouts/head.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
