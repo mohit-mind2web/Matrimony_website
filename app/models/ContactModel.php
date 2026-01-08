@@ -27,18 +27,42 @@ class ContactModel extends Model{
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getUserQueries($user_id, $limit = 5, $offset = 0) {
-        $sql = "SELECT * FROM queries WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?";
+    public function getUserQueries($user_id, $limit = 5, $offset = 0, $filters = []) {
+        $sql = "SELECT * FROM queries WHERE user_id = ?";
+        $params = [$user_id];
+        $types = "i";
+
+        if (isset($filters['status']) && $filters['status'] !== '') {
+            $sql .= " AND status = ?";
+            $params[] = (int)$filters['status'];
+            $types .= "i";
+        }
+
+        $sql .= " ORDER BY created_at DESC LIMIT ? OFFSET ?";
+        $params[] = $limit;
+        $params[] = $offset;
+        $types .= "ii";
+
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('iii', $user_id, $limit, $offset);
+        $stmt->bind_param($types, ...$params);
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
-    public function countqueries($user_id)
+
+    public function countqueries($user_id, $filters = [])
     {
         $sql = "SELECT COUNT(*) AS total FROM queries WHERE user_id=?";
+        $params = [$user_id];
+        $types = "i";
+
+        if (isset($filters['status']) && $filters['status'] !== '') {
+            $sql .= " AND status = ?";
+            $params[] = (int)$filters['status'];
+            $types .= "i";
+        }
+
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('i', $user_id);
+        $stmt->bind_param($types, ...$params);
         $stmt->execute();
         return (int) $stmt->get_result()->fetch_assoc()['total'];
     }

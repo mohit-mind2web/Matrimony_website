@@ -12,12 +12,15 @@ class UserController extends Controller
     public function index()
     {
         Auth::requireRole([1]);
+        $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+
         if (isset($_POST['reset_filters']) && $_POST['reset_filters'] == 1) {
             unset($_SESSION['user_filters']);
-            header("Location: /admin/usermanage");
-            exit;
-        }
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!$isAjax) {
+                header("Location: /admin/usermanage");
+                exit;
+            }
+        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['export'])) {
             $_SESSION['user_filters'] = [
                 'name' => trim($_POST['name'] ?? ''),
                 'profilestatus' => $_POST['profilestatus'] ?? '',
@@ -55,19 +58,34 @@ class UserController extends Controller
         $total = $userModel->getcountusers($filters);
         $pagination = Pagination::pagination($total, 10);
         $userdetails = $userModel->getallusers($filters, $pagination['limit'], $pagination['offset']);
-        $this->view('/admin/manageusers', [
-            'userdetails' => $userdetails,
-            'pagination' => $pagination,
-            'filters' => $filters
-        ]);
+
+        if ($isAjax) {
+             $this->render('/admin/partials/users_table', [
+                'userdetails' => $userdetails,
+                'pagination' => $pagination,
+                'filters' => $filters
+            ]);
+        } else {
+            $this->view('/admin/manageusers', [
+                'userdetails' => $userdetails,
+                'pagination' => $pagination,
+                'filters' => $filters
+            ]);
+        }
     }
 
-    //update status 
     public function toggle()
     {
         $user_id = $_POST['user_id'];
         $userModel = new UserModel();
         $userModel->statusupdate($user_id);
+        
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'success']);
+            exit;
+        }
+
         header("Location:/admin/usermanage");
         exit();
     }
