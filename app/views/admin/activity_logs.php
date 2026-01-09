@@ -18,6 +18,7 @@
                     <option value="LOGIN" <?= ($filters['activity_type'] ?? '') == 'LOGIN' ? 'selected' : '' ?>>Login</option>
                     <option value="LOGOUT" <?= ($filters['activity_type'] ?? '') == 'LOGOUT' ? 'selected' : '' ?>>Logout</option>
                     <option value="REGISTER" <?= ($filters['activity_type'] ?? '') == 'REGISTER' ? 'selected' : '' ?>>Register</option>
+                     <option value="PROFILE_CREATE" <?= ($filters['activity_type'] ?? '') == 'PROFILE_CREATE' ? 'selected' : '' ?>>Profile create</option>
                 </select>
 
                 <input type="text" id="date_range" name="date_range" value="<?= htmlspecialchars($filters['date_range'] ?? '') ?>" placeholder="Select Date Range">

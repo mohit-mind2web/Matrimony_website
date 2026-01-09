@@ -34,26 +34,37 @@ $queryString = $queryString ? $queryString . '&' : '';
                          echo "<li><span>...</span></li>";
                     };
 
-                    if ($totalPages <= 7) {
-                        for ($i = 1; $i <= $totalPages; $i++) $printPage($i);
-                    } else {
-                        if ($currentPage < 5) {
-                             for ($i = 1; $i <= 5; $i++) $printPage($i);
-                             $printEllipsis();
-                             $printPage($totalPages);
-                        } elseif ($currentPage > $totalPages - 4) {
-                             $printPage(1);
-                             $printEllipsis();
-                             for ($i = $totalPages - 4; $i <= $totalPages; $i++) $printPage($i);
-                        } else {
-                             $printPage(1);
-                             $printEllipsis();
-                             $printPage($currentPage - 1);
-                             $printPage($currentPage);
-                             $printPage($currentPage + 1);
-                             $printEllipsis();
-                             $printPage($totalPages);
+                    // Always print page 1
+                    $printPage(1);
+
+                    if ($totalPages <= 5) {
+                        // If few pages, show them all
+                        for ($i = 2; $i < $totalPages; $i++) {
+                             $printPage($i);
                         }
+                    } else {
+                        // Logic for many pages: 1 ... x y z ... Last
+                        // We want: 1, then maybe ..., then current-1, current, current+1, then maybe ..., then Last
+                        
+                        $start = max(2, $currentPage - 1);
+                        $end = min($totalPages - 1, $currentPage + 1);
+
+                        if ($start > 2) {
+                            $printEllipsis();
+                        }
+
+                        for ($i = $start; $i <= $end; $i++) {
+                            $printPage($i);
+                        }
+
+                        if ($end < $totalPages - 1) {
+                            $printEllipsis();
+                        }
+                    }
+
+                    // Always print last page if total > 1
+                    if ($totalPages > 1) {
+                         $printPage($totalPages);
                     }
                     ?>
                     <?php if ($pagination['page'] < $pagination['totalpages']): ?>

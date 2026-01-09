@@ -9,7 +9,6 @@ class ActivityLogger extends Model {
     
     public static function log($activityType, $description, $userId = null, $userRole = null) {
         
-        // Attempt to get user info from session if not provided
         if ($userId === null && isset($_SESSION['user_id'])) {
             $userId = $_SESSION['user_id'];
         }
@@ -18,7 +17,7 @@ class ActivityLogger extends Model {
             $userRole = $_SESSION['role_id'];
         }
 
-        // Get IP and User Agent
+        // Get ip addesss and User Agent
         $ipAddress = $_SERVER['REMOTE_ADDR'] ?? null;
         $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? null;
 $log = new ActivityLog();

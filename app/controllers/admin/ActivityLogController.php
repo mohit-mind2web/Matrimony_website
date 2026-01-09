@@ -21,7 +21,6 @@ class ActivityLogController extends Controller
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['activity_filters'] = [
                 'email' => trim($_POST['email'] ?? ''),
-                'role' => $_POST['role'] ?? '',
                 'activity_type' => $_POST['activity_type'] ?? '',
                 'date_range' => $_POST['date_range'] ?? '',
             ];
@@ -29,7 +28,6 @@ class ActivityLogController extends Controller
 
         $filters = $_SESSION['activity_filters'] ?? [
             'email' => '',
-            'role' => '',
             'activity_type' => '',
             'date_range' => '',
         ];

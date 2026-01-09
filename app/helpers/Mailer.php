@@ -14,7 +14,7 @@ class Mailer
         try {
             // Server settings
             $mail->SMTPDebug = 0; 
-            $mail->Debugoutput = 'html'; // print Output properly in browser
+            $mail->Debugoutput = 'html'; 
             $mail->isSMTP();
             $mail->Host       = $_ENV['MAIL_HOST'] ?? 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
@@ -23,11 +23,9 @@ class Mailer
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = $_ENV['MAIL_PORT'] ?? '587';
 
-            // Recipients
             $mail->setFrom($_ENV['MAIL_USERNAME'] ?? 'noreply@matrimony.com', 'Soulmates Matrimony');
             $mail->addAddress($toEmail, $toName);
 
-            // Content
             $mail->isHTML(true);
             $mail->Subject = 'Welcome to Soulmates!';
             $mail->Body    = "
