@@ -48,12 +48,16 @@ class MatchesController extends Controller
         $filters = $_POST ?? [];
 
         $user_id = $_SESSION['user_id'];
-        $page = $filters['page'] ?? 1;
+        $page = (int)($filters['page'] ?? 1);
+        if ($page < 1) {
+            $page = 1;
+        }
         $limit = 6;
         $offset = ($page - 1) * $limit;
         $profileModel = new UserMatches();
         $total = $profileModel->countFilteredProfiles($user_id, $filters);
-        $pagination = Pagination::pagination($total, $limit, $page);
+        $_GET['page'] = $page;
+        $pagination = Pagination::pagination($total, $limit);
         $profiles = $profileModel->filterProfiles($user_id, $filters, $limit, $offset);
         require APPROOT . '/views/profile/profilelist.php';
     }

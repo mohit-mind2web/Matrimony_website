@@ -81,6 +81,7 @@ $router->post('/admin/managequeries',[QueriesController::class,'index']);
 
 $router->post('/admin/queries/status',[QueriesController::class,'updatequery']);
 $router->get('/admin/activity-logs',[ActivityLogController::class,'index']);
+$router->post('/admin/activity-logs',[ActivityLogController::class,'index']);
 //chat
 // chat message
 $router->get('/user/messages', [ChatController::class, 'chat']);

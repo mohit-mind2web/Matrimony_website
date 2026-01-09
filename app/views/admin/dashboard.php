@@ -39,8 +39,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>User_Id</th>
+                        <th>Query-ID</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Subject</th>
@@ -52,7 +51,6 @@
                         <?php foreach ($recentQueries as $query): ?>
                         <tr>
                             <td class="query-id"><?= $query['id'] ?></td>
-                            <td><?= $query['user_id'] ?></td>
                             <td><?= htmlspecialchars($query['fullname']) ?></td>
                             <td><?= htmlspecialchars($query['email']) ?></td>
                             <td><?= htmlspecialchars($query['subject']) ?></td>

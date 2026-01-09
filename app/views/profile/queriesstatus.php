@@ -2,6 +2,7 @@
     <meta charset="UTF-8">
     <title>My Queries Status</title>
         <link rel="stylesheet" href="/assets/css/queriesstatus.css" />
+    <link rel="stylesheet" href="/assets/css/pagination.css" />
     <script src="/assets/js/filters.js"></script>
 </head>
     <main>
@@ -25,6 +26,5 @@
                 <?php include __DIR__ . '/partials/queries_status_table.php'; ?>
             </div>
         </section>
-    </main>
     </main>
 </html>

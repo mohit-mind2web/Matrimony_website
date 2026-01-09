@@ -1,4 +1,3 @@
-// Generic AJAX Filter Script
 document.addEventListener('DOMContentLoaded', function () {
     const filterForms = document.querySelectorAll('.ajax-filter-form');
 
@@ -23,7 +22,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            fetchData(form, tableContainer, new FormData(form));
+            const page = (e.detail && e.detail.page) ? e.detail.page : 1;
+            fetchData(form, tableContainer, new FormData(form), page);
         });
 
         const inputs = form.querySelectorAll('input, select');
@@ -70,8 +70,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    function fetchData(form, container, formData) {
-        const url = form.getAttribute('action');
+    function fetchData(form, container, formData, page = 1) {
+        let url = form.getAttribute('action');
+
+        if (page > 1) {
+            url += (url.includes('?') ? '&' : '?') + 'page=' + page;
+        }
 
         fetch(url, {
             method: 'POST',
@@ -108,7 +112,20 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (data.status === 'success') {
                             const filterForm = document.querySelector('.ajax-filter-form');
                             if (filterForm) {
-                                const event = new Event('submit', { cancelable: true });
+                                const targetId = filterForm.getAttribute('data-target');
+                                const container = document.getElementById(targetId);
+                                let page = 1;
+                                if (container) {
+                                    const activeLink = container.querySelector('.pagination .active');
+                                    if (activeLink) {
+                                        page = parseInt(activeLink.textContent.trim()) || 1;
+                                    }
+                                }
+
+                                const event = new CustomEvent('submit', {
+                                    cancelable: true,
+                                    detail: { page: page }
+                                });
                                 filterForm.dispatchEvent(event);
                             }
                         } else {
@@ -120,7 +137,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Handle Button-based Action Forms (e.g., Block/Unblock)
     document.body.addEventListener('submit', function (e) {
         if (e.target.classList.contains('ajax-action-button-form')) {
             e.preventDefault();
@@ -139,10 +155,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
-                        // Refresh the main table
                         const filterForm = document.querySelector('.ajax-filter-form');
                         if (filterForm) {
-                            const event = new Event('submit', { cancelable: true });
+                            const targetId = filterForm.getAttribute('data-target');
+                            const container = document.getElementById(targetId);
+                            let page = 1;
+                            if (container) {
+                                const activeLink = container.querySelector('.pagination .active');
+                                if (activeLink) {
+                                    page = parseInt(activeLink.textContent.trim()) || 1;
+                                }
+                            }
+
+                            const event = new CustomEvent('submit', {
+                                cancelable: true,
+                                detail: { page: page }
+                            });
                             filterForm.dispatchEvent(event);
                         }
                     } else {

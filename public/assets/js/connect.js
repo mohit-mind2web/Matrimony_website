@@ -108,9 +108,14 @@ $(document).ready(function () {
     });
 
     // Reset filters
-    $('#resetFilters').on('click', function () {
-        filterActive = false;
-        window.location.href = '/user/matches';
+    $('#resetFilters').on('click', function (e) {
+        e.preventDefault();
+        $('#filterForm')[0].reset();
+
+        // Trigger change for dependent filters
+        $('select[name="age_from"]').trigger('change');
+
+        $('#filterForm').trigger('submit');
     });
 
     // Dependent Age Filters

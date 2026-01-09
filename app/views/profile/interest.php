@@ -1,6 +1,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/css/interest.css" />
+    <link rel="stylesheet" href="/assets/css/pagination.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <script src="/assets/js/tabs.js"></script> 
     <title>Document</title>

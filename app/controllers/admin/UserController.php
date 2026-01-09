@@ -36,22 +36,32 @@ class UserController extends Controller
         $userModel = new UserModel();
 
         if (isset($_POST['export']) && $_POST['export'] == 1) {
+            if (ob_get_level()) ob_end_clean();
+            
+            $previous_error_reporting = ini_get('display_errors');
+            ini_set('display_errors', 0);
+
             $userdetails = $userModel->getallusers($filters, 100000, 0);
-            header('Content-Type: text/csv');
+            header('Content-Type: text/csv; charset=utf-8');
             header('Content-Disposition: attachment; filename="users.csv"');
+            
             $output = fopen('php://output', 'w');
-            fputcsv($output, ['User Id', 'Full Name', 'Email', 'Profile Status', 'Status', 'Joined At']);
-            foreach ($userdetails as $user) {
+            
+            fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
+            
+            fputcsv($output, ['Id', 'Full Name', 'Email', 'Profile Status', 'Status', 'Joined At'], ",", "\"", "\\");
+            foreach ($userdetails as $key => $user) {
                 fputcsv($output, [
-                    $user['id'],
+                   $key+1,
                     $user['fullname'],
                     $user['email'],
                     $user['profile_complete'] ? 'Completed' : 'Incomplete',
                     $user['status'] == 1 ? 'Active' : 'Blocked',
                     date('d M Y', strtotime($user['created_at']))
-                ]);
+                ], ",", "\"", "\\");
             }
             fclose($output);
+            ini_set('display_errors', $previous_error_reporting);
             exit;
         }
 

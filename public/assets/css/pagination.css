@@ -1,6 +1,6 @@
-/* .pagination{
+ .pagination{
     margin-top: 20px;
-} */
+} 
 .pagination ul{
     display: flex;
     justify-content: end;

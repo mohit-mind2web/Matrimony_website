@@ -41,5 +41,7 @@
             <?php } else { ?>
                 <p>No matching record Found</p>
             <?php } ?>
-            
+            <div class="page">
+            <?php include __DIR__ . '/../layouts/pagination.php'; ?>
+            </div>
            

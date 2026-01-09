@@ -1,17 +1,21 @@
 <?php 
-$currentTab = $pagination['tab'] ?? null; 
+$currentTab = $pagination['tab'] ?? null;
+// Build query string from current GET parameters, excluding the page parameter
+$queryParams = $_GET;
+unset($queryParams[$pagination['pageParam']]);
+if ($currentTab) {
+    $queryParams['tab'] = $currentTab;
+}
+$queryString = http_build_query($queryParams);
+$queryString = $queryString ? $queryString . '&' : '';
 ?>
-<head>
-    <link rel="stylesheet" href="/assets/css/pagination.css" />
-</head>
-<main>
     <?php if ($pagination['totalpages'] > 1): ?>
         <div class="pagination">
             <nav>
                 <ul>
                     <?php if ($pagination['page'] > 1): ?>
                         <li>
-                            <a href="?<?= $currentTab ? "tab={$currentTab}&" : "" ?><?= $pagination['pageParam'] ?>=<?= $pagination['page'] - 1 ?>" class="ajax-pagination-link">
+                            <a href="?<?= $queryString ?><?= $pagination['pageParam'] ?>=<?= $pagination['page'] - 1 ?>" class="ajax-pagination-link">
                                 Prev
                             </a>
                         </li>
@@ -20,9 +24,9 @@ $currentTab = $pagination['tab'] ?? null;
                     <?php
                     $totalPages = $pagination['totalpages'];
                     $currentPage = $pagination['page'];
-                    $printPage = function($i) use ($currentTab, $pagination, $currentPage) {
+                    $printPage = function($i) use ($queryString, $pagination, $currentPage) {
                          $activeClass = $i == $currentPage ? 'active' : '';
-                         $url = "?" . ($currentTab ? "tab={$currentTab}&" : "") . "{$pagination['pageParam']}={$i}";
+                         $url = "?" . $queryString . "{$pagination['pageParam']}={$i}";
                          echo "<li><a href='{$url}' class='{$activeClass} ajax-pagination-link'>{$i}</a></li>";
                     };
                     
@@ -54,7 +58,7 @@ $currentTab = $pagination['tab'] ?? null;
                     ?>
                     <?php if ($pagination['page'] < $pagination['totalpages']): ?>
                         <li>
-                            <a href="?<?= $currentTab ? "tab={$currentTab}&" : "" ?><?= $pagination['pageParam'] ?>=<?= $pagination['page'] + 1 ?>" class="ajax-pagination-link">
+                            <a href="?<?= $queryString ?><?= $pagination['pageParam'] ?>=<?= $pagination['page'] + 1 ?>" class="ajax-pagination-link">
                                 Next
                             </a>
                         </li>
@@ -64,6 +68,3 @@ $currentTab = $pagination['tab'] ?? null;
             </nav>
         </div>
     <?php endif; ?>
-    </ul>
-    </nav>
-</main>

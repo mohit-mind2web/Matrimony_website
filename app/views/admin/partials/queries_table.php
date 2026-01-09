@@ -19,7 +19,7 @@
                 </td>
                 <td><?= htmlspecialchars($query['email']) ?></td>
                 <td><?= htmlspecialchars($query['subject']) ?></td>
-                 <td><?= htmlspecialchars($query['message']) ?></td>
+                 <td><?= $query['message'] ?></td>
 
                 <td>
                     <?php echo match ($query['status']) {
